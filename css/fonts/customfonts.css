@@ -1,0 +1,17 @@
+.jomhuria-regular {
+    font-family: "Jomhuria", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .fs-custom {
+    font-size: 4rem; /* Adjust the size as needed */
+}
+
+.fs-custom2{
+  font-size: 3rem;
+}
+
+.fs-custom3{
+  font-size: 10rem;
+}
