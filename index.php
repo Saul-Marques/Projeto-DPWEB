@@ -122,21 +122,23 @@ $result = $conn->query($sql);
   <div class="container-fluid mt-5 mb-5">
     <div class="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 row-cols-1 gy-4 ms-3 me-3">
     <?php while($row = $result->fetch_assoc()): ?>
-    <div class="col">
-        <div class="card rounded-5" style="width: 300px; height: 400px; background-color: white;">
-            <div class="card-header border-0 bg-transparent mt-1">
-                <?php echo htmlspecialchars($row['username']); ?>
+            <div class="col">
+                <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['id']); ?>" class="text-decoration-none">
+                    <div class="card rounded-5" style="width: 300px; height: 400px; background-color: white;">
+                        <div class="card-header border-0 bg-transparent mt-1">
+                            <?php echo htmlspecialchars($row['username']); ?>
+                        </div>
+                        <div class="container rounded mx-auto text-center" style="width: 258px; height: 250px; background-color: white;">
+                            <img src="<?php echo htmlspecialchars($row['image_path']); ?>" class="rounded-4" alt="Product Image" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title"><?php echo htmlspecialchars($row['titulo']); ?></div>
+                            <div class="card-text"><h5 class="fw-bold"><?php echo htmlspecialchars($row['preco']); ?>€</h5></div>
+                        </div>
+                    </div>
+                </a>
             </div>
-            <div class="container text-center" style="width: 258px; height: 250px;">
-                <img class="rounded" src="<?php echo htmlspecialchars($row['image_path']); ?>" alt="Product Image" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>
-            <div class="card-body">
-                <div class="card-title"><?php echo htmlspecialchars($row['titulo']); ?></div>
-                <div class="card-text"><h5 class="fw-bold"><?php echo htmlspecialchars($row['preco']); ?>€</h5></div>
-            </div>
-        </div>
-    </div>
-<?php endwhile; ?>
+        <?php endwhile; ?>
 
     </div>
 </div>

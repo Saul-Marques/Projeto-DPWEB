@@ -3,7 +3,34 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
 $isLoggedIn = isset($_SESSION['user_id']);
-include 'db.php'; // Conexão à base de dados
+include 'db.php';
+
+if (isset($_GET['id'])) {
+    $productId = $_GET['id'];
+    $sql = "SELECT p.*, u.username, pi.image_path 
+            FROM produto p 
+            JOIN users u ON p.user_id = u.id
+            LEFT JOIN produto_imagens pi ON p.id = pi.produto_id 
+            WHERE p.id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $productId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $product = $result->fetch_assoc();
+
+$images_query = $conn->prepare("SELECT image_path FROM produto_imagens WHERE produto_id = ?");
+$images_query->bind_param("i", $productId);
+$images_query->execute();
+$images_result = $images_query->get_result();
+    // Verifica se produto existe
+    if (!$product) {
+        echo "Produto nao encontrado";
+        exit;
+    }
+} else {
+    echo "Sem ID do produto";
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -69,25 +96,53 @@ include 'db.php'; // Conexão à base de dados
 
     </div>
     <!--Coluna das imagens e da descricao-->
-    <div class="col-7 " >
-      <div class="row rounded" style="background-color: #D9D9D9; height: 517px;">
-        Imagens
-      </div>
-      <!--Descrição-->
-      <div class="row rounded mt-3" style="background-color: white; height: 514px;">
-        <div class="col-11">
-          <p class="jomhuria-regular fs-custom ms-3 mb-0 g-0">
-            Título
-          </p>
-          <p class="jomhuria-regular ms-3 fs-1 mt-0" style="color: #D9D9D9;">
-            Descrição:
-          </p>
-        </div>
-        <div class="col mt-4">
-          <img src="imgs/icons/bookmark.svg" style="width: 28px; height: 28px;" alt="">
+    <div class="col-7">
+      
+        <div class="row rounded" style="background-color: #D9D9D9; height: 517px;">             
+            <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <?php
+                    $active = "active";
+                    while ($image = $images_result->fetch_assoc()):
+                    ?>
+                        <div class="carousel-item text-center <?php echo $active; ?>">
+                            <img src="<?php echo htmlspecialchars($image['image_path']); ?>" alt="Product Image" style="height: 517px; object-fit: cover;">
+                        </div>
+                    <?php
+                    $active = "";
+                    endwhile;
+                    ?>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
         </div>
         
-      </div>
+        
+        <div class="row rounded mt-3 mb-5" style="background-color: white;">
+            <div class="col-11">
+                <p class="jomhuria-regular fs-custom ms-3 mb-0 g-0">
+                    <?php echo htmlspecialchars($product['titulo']); ?>
+                </p>
+                <p class="jomhuria-regular ms-3 fs-1 mt-0" style="color: #D9D9D9;">
+                    Descrição:
+                </p>
+                <p class="jomhuria-regular fs-1 ms-3 mb-5"><?php echo htmlspecialchars($product['descricao']); ?></p>
+            </div>
+            <div class="col mt-4">
+              <a href="">
+                <img src="imgs/icons/bookmark.svg" style="width: 28px; height: 28px;" alt="">
+              </a>
+              
+            </div>
+            
+        </div>
     </div>
     <!--Coluna das licitacoes e utilizador-->
     <div class="col-3 ms-3">
@@ -96,12 +151,12 @@ include 'db.php'; // Conexão à base de dados
           <p class="jomhuria-regular fs-4 g-0 mb-0 mt-2" style="line-height: 1; color: #2C2C2C;">
             Publicado a:
           </p>
-          <p class="jomhuria-regular fs-custom" style="line-height: 1;">
-            Titulo
-          </p>
           <p class="jomhuria-regular fs-1">
-            Preço:
-          </p>
+                Utilizador: <?php echo htmlspecialchars($product['username']); ?>
+            </p>
+            <p class="jomhuria-regular fs-1">
+                Preço: <?php echo htmlspecialchars($product['preco']); ?>€
+            </p>
           <p class="jomhuria-regular fs-1" style="line-height: 1;">
             Licitação atual:
           </p>
@@ -122,19 +177,19 @@ include 'db.php'; // Conexão à base de dados
         </div>
         
       </div>
-      <div class="row rounded mt-3" style="background-color: white; height: 347px;">
+      <div class="row rounded mt-3" style="background-color: white;">
         <div class="col">
           <p class="jomhuria-regular fs-1" style="line-height: 1; color: #5E5E5E;">
-            Utilizador:
+            Do Utilizador: 
           </p>
           <p class="jomhuria-regular fs-custom" style="line-height: 1; color: #000000;">
             <img src="imgs/icons/account_circle.svg" alt="">
-            (Nome de utilizador)
+            <?php echo htmlspecialchars($product['username']); ?>
           </p>
           <p class="jomhuria-regular fs-1" style="line-height: 1; color: #000000;">
             Ultimas licitações:
           </p>
-          <pre class="jomhuria-regular fs-3" style="line-height: 1; color: #5E5E5E;">(nome de utilizador) Há 00h                                10.00€</pre>
+          <pre class="jomhuria-regular fs-3 mb-5" style="line-height: 1; color: #5E5E5E;">(nome de utilizador) Há 00h                                10.00€</pre>
         </div>
         
       </div>
