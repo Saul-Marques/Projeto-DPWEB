@@ -7,7 +7,7 @@
 - [x] Menu de contexto
 ### Lista de funcionalidades extra:
 - [ ] Chat
-- [ ] Leilões
+- [ ] Leilões (WIP)
 - [ ] Adicionar Produtos aos "Favoritos"
 - [ ] Comprar produtos na hora
 - [ ] Simulação de transações
