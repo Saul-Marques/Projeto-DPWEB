@@ -74,24 +74,10 @@ $result = $conn->query($sql);
   </div>
 </nav>
 
-  <!--  TO DO!!-->
-  <!-- Search bar / input group -->
-   <!--
-  <div class="container" style="margin-top: 37px; height: 70px;">
-    <div class="input-group">
-      <input type="text" class="form-control  rounded-start-pill  border-end-0 border-black" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="button-pesquisa1">
-      <button class="btn rounded-end-pill  border-black border-start-0" type="button" id="button-pesquisa1" style="background-color: white; height: 55px;">
-        <img src="imgs/icons/iconpesquisa.svg" style="margin-bottom: 3px;" alt="">
-      </button>
-    </div>
-  </div>
--->
-
   <!--Imagem principal-->
   <div class="container-fluid p-0 rounded" style="background-color: transparent;">
     <img class="object-fit-contain" src="imgs/cover2.png" style="object-fit: contain; width: 100%; height: 100%;" alt="">
     
-    <!--Ver isto!!!!-->
     <div class="input-group " style="position: absolute; bottom: 80%; left: 10%;; width: 75%;">
       <input type="text" class="form-control d-none d-md-block  rounded-start-pill  border-end-0 border-black" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="button-pesquisa1">
       <button class="btn d-none d-md-block rounded-end-pill  border-black border-start-0" type="button" id="button-pesquisa1" style="background-color: white; height: 55px;">
@@ -111,7 +97,7 @@ $result = $conn->query($sql);
 
   <!--Slogan-->
   <div class="container rounded text-center jomhuria-regular fs-custom" style="margin-top: 27px; background-color: white;">
-    (SLOGAN)
+    (Somos bué sigma)
   </div>
 
   <!--Categorias-->

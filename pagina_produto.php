@@ -92,11 +92,11 @@ $images_result = $images_query->get_result();
 
   <div class="row ms-5 mt-5 me-5">
     <!--Coluna sem nada-->
-    <div class="col-1">
+    <div class="col-1 d-none d-lg-block">
 
     </div>
     <!--Coluna das imagens e da descricao-->
-    <div class="col-7">
+    <div class="col">
       
         <div class="row rounded" style="background-color: #D9D9D9; height: 517px;">             
             <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -106,7 +106,7 @@ $images_result = $images_query->get_result();
                     while ($image = $images_result->fetch_assoc()):
                     ?>
                         <div class="carousel-item text-center <?php echo $active; ?>">
-                            <img src="<?php echo htmlspecialchars($image['image_path']); ?>" alt="Product Image" style="height: 517px; object-fit: cover;">
+                          <img src="<?php echo htmlspecialchars($image['image_path']); ?>" alt="Product Image" style="height: 517px;width:100%; object-fit: contain;">
                         </div>
                     <?php
                     $active = "";
@@ -124,28 +124,71 @@ $images_result = $images_query->get_result();
             </div>
         </div>
         
+      <div class="d-block d-lg-none mt-3">
+      <div class="row rounded" style="background-color: white;">
+        <div class="col">
+          <p class="jomhuria-regular fs-4 g-0 mb-0 mt-2" style="line-height: 1; color: #2C2C2C;">
+            Publicado a:
+          </p>
+          <p class="jomhuria-regular fs-1">
+                Utilizador: <?php echo htmlspecialchars($product['username']); ?>
+            </p>
+            <p class="jomhuria-regular fs-1">
+                Preço: <?php echo htmlspecialchars($product['preco']); ?>€
+            </p>
+          <p class="jomhuria-regular fs-1" style="line-height: 1;">
+            Licitação atual:
+          </p>
+          <p class="jomhuria-regular fs-4 g-0 mb-0 mt-2" style="line-height: 0; color: #5E5E5E;">
+            Termina em:
+          </p>
+          <br>
+          <div class="input-group">
+            <input type="text" class="form-control rounded-4 border-1 jomhuria-regular fs-3 align-self-center me-5" style="background-color: #BBBBBB; line-height: 0; border-color: black;" placeholder="Valor a licitar" name="licitacao" required>
+          </div>
+          <div class="btn rounded-4 border-1 jomhuria-regular fs-1 align-self-center me-5 mt-3" style="background-color: #BBBBBB; border-color: black; width: 100%; line-height: 1;">
+            Licitar
+          </div>
+
+          <div class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
+            Comprar agora.
+          </div>
+        </div>
         
+      </div>
+      <div class="row rounded mt-3" style="background-color: white;">
+        <div class="col">
+          <p class="jomhuria-regular fs-1" style="line-height: 1; color: #5E5E5E;">
+            Do Utilizador: 
+          </p>
+          <p class="jomhuria-regular fs-custom" style="line-height: 1; color: #000000;">
+            <img src="imgs/icons/account_circle.svg" alt="">
+            <?php echo htmlspecialchars($product['username']); ?>
+          </p>
+          <p class="jomhuria-regular fs-1" style="line-height: 1; color: #000000;">
+            Ultimas licitações:
+          </p>
+          <pre class="jomhuria-regular fs-3 mb-5" style="line-height: 1; color: #5E5E5E;">(nome de utilizador) Há 00h                                10.00€</pre>
+        </div>
+        
+      </div>
+    </div>
         <div class="row rounded mt-3 mb-5" style="background-color: white;">
-            <div class="col-11">
+            
                 <p class="jomhuria-regular fs-custom ms-3 mb-0 g-0">
                     <?php echo htmlspecialchars($product['titulo']); ?>
+                    <a href="">
+                      <img src="imgs/icons/bookmark.svg" style="width: 28px; height: 28px;" alt="">
+                    </a>
                 </p>
                 <p class="jomhuria-regular ms-3 fs-1 mt-0" style="color: #D9D9D9;">
-                    Descrição:
+                    Descrição: 
                 </p>
                 <p class="jomhuria-regular fs-1 ms-3 mb-5"><?php echo htmlspecialchars($product['descricao']); ?></p>
-            </div>
-            <div class="col mt-4">
-              <a href="">
-                <img src="imgs/icons/bookmark.svg" style="width: 28px; height: 28px;" alt="">
-              </a>
-              
-            </div>
-            
         </div>
     </div>
     <!--Coluna das licitacoes e utilizador-->
-    <div class="col-3 ms-3">
+    <div class="col-3 d-none d-lg-block ms-3">
       <div class="row rounded" style="background-color: white;">
         <div class="col">
           <p class="jomhuria-regular fs-4 g-0 mb-0 mt-2" style="line-height: 1; color: #2C2C2C;">
