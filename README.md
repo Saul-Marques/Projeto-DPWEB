@@ -2,12 +2,12 @@
 ## Website de compras e vendas, tipo Olx, Vinted, wallapop ou thingle
 ### Lista de funcionalidades principais:
 - [x] Inserção e eliminação de artigos
-- [ ] Visualização de produtos
+- [X] Visualização de produtos
 - [ ] Agrupamento por categorias
 - [x] Menu de contexto
 ### Lista de funcionalidades extra:
 - [ ] Chat
-- [ ] Leilões
+- [ ] Leilões (WIP)
 - [ ] Adicionar Produtos aos "Favoritos"
 - [ ] Comprar produtos na hora
 - [ ] Simulação de transações
