@@ -70,4 +70,4 @@ for ($i = 0; $i < count($images['name']); $i++) {
 
     $conn->close();
 }
-?>
+

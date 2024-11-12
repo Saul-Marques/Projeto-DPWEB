@@ -75,15 +75,15 @@ $result = $conn->query($sql);
 </nav>
 
   <!--Imagem principal-->
-  <div class="container-fluid p-0 rounded" style="background-color: transparent;">
-    <img class="object-fit-contain" src="imgs/cover2.png" style="object-fit: contain; width: 100%; height: 100%;" alt="">
+<div class="container-fluid p-0 rounded" style="background-color: transparent;">
+  <img class="object-fit-contain" src="imgs/cover2.png" style="object-fit: contain; width: 100%; height: 100%;" alt="">
     
-    <div class="input-group " style="position: absolute; bottom: 80%; left: 10%;; width: 75%;">
-      <input type="text" class="form-control d-none d-md-block  rounded-start-pill  border-end-0 border-black" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="button-pesquisa1">
-      <button class="btn d-none d-md-block rounded-end-pill  border-black border-start-0" type="button" id="button-pesquisa1" style="background-color: white; height: 55px;">
-        <img src="imgs/icons/iconpesquisa.svg" style="margin-bottom: 3px;" alt="">
-      </button>
-    </div>
+  <div class="input-group " style="position: absolute; bottom: 80%; left: 10%;; width: 75%;">
+    <input type="text" class="form-control d-none d-md-block  rounded-start-pill  border-end-0 border-black" placeholder="Pesquisa" aria-label="Pesquisa" aria-describedby="button-pesquisa1">
+    <button class="btn d-none d-md-block rounded-end-pill  border-black border-start-0" type="button" id="button-pesquisa1" style="background-color: white; height: 55px;">
+      <img src="imgs/icons/iconpesquisa.svg" style="margin-bottom: 3px;" alt="">
+    </button>
+  </div>
 
   </div>
 
@@ -108,29 +108,28 @@ $result = $conn->query($sql);
   <div class="container-fluid mt-5 mb-5">
     <div class="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 row-cols-1 gy-4 ms-3 me-3">
     <?php while($row = $result->fetch_assoc()): ?>
-            <div class="col">
-                <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['id']); ?>" class="text-decoration-none">
-                    <div class="card rounded-5" style="width: 300px; height: 400px; background-color: white;">
-                        <div class="card-header border-0 bg-transparent mt-1">
-                            <?php echo htmlspecialchars($row['username']); ?>
-                        </div>
-                        <div class="container rounded mx-auto text-center" style="width: 258px; height: 250px; background-color: white;">
-                            <img src="<?php echo htmlspecialchars($row['image_path']); ?>" class="rounded-4" alt="Product Image" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="card-body">
-                            <div class="card-title"><?php echo htmlspecialchars($row['titulo']); ?></div>
-                            <div class="card-text"><h5 class="fw-bold"><?php echo htmlspecialchars($row['preco']); ?>€</h5></div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        <?php endwhile; ?>
-
+      <div class="col">
+        <div class="card rounded-5" style="width: 300px; height: 400px; background-color: white;">
+          <div class="card-header border-0 bg-transparent mt-1">
+              <?php echo htmlspecialchars($row['username']); ?>
+          </div>
+          <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['id']); ?>" class="text-decoration-none">
+          <div class="container rounded mx-auto text-center" style="width: 258px; height: 250px; background-color: white;">
+              <img src="<?php echo htmlspecialchars($row['image_path']); ?>" class="rounded-4" alt="Product Image" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          </a>
+          <div class="card-body">
+            <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['id']); ?>" class="text-decoration-none " style="color: #000000">
+              <div class="card-title"><?php echo htmlspecialchars($row['titulo']); ?></div>
+            </a>
+            <div class="card-text"><h5 class="fw-bold"><?php echo htmlspecialchars($row['preco']); ?>€</h5></div>
+          </div>
+        </div>
+      </div>
+      <?php endwhile; ?>
     </div>
 </div>
 <h1 class="text-center mt-5 mb-5 jomhuria-regular fs-custom" style="color: rgba(150, 150, 150, 0.425);">Chegou ao fim...</h2>
-
-
   <!--Footer-->
     <footer style="background-color: black; color: white;">
       <div class="container">
@@ -150,9 +149,7 @@ $result = $conn->query($sql);
           </div>
         </div>
       </div>
-
     </footer>
-
     </div>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
