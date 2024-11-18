@@ -18,5 +18,5 @@
 - [ ] Contactos
 - [x] Adicionar Produto
 - [x] Página do Produto
-- [ ] Página de utilizador
+- [X] Página de utilizador
 - [ ] "Carrinho"

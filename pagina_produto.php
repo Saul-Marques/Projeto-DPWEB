@@ -57,7 +57,7 @@ $images_result = $images_query->get_result();
       <div class="d-flex align-items-center">
         <!-- Icons são apresantados se o user estiver logado -->
         <?php if ($isLoggedIn == true): ?>
-          <a class="btn" href="#">
+          <a class="btn" href="pagina_utilizador.php">
             <img src="imgs/icons/iconperson.svg" alt="">
           </a>
           <a class="btn" href="#">

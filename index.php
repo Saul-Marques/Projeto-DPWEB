@@ -41,7 +41,7 @@ $result = $conn->query($sql);
     <div class="d-flex align-items-center">
       <!-- Icons são apresantados se o user estiver logado -->
       <?php if ($isLoggedIn == true): ?>
-        <a class="btn" href="#">
+        <a class="btn" href="pagina_utilizador.php">
           <img src="imgs/icons/iconperson.svg" alt="">
         </a>
         <a class="btn" href="#">
@@ -110,9 +110,9 @@ $result = $conn->query($sql);
     <?php while($row = $result->fetch_assoc()): ?>
       <div class="col">
         <div class="card rounded-5" style="width: 300px; height: 400px; background-color: white;">
-          <div class="card-header border-0 bg-transparent mt-1">
+          <a href="pagina_utilizador_guest.php?user_id=<?php echo htmlspecialchars($row['user_id']); ?>" class="card-header border-0 bg-transparent mt-1" style="text-decoration: none">
               <?php echo htmlspecialchars($row['username']); ?>
-          </div>
+          </a>
           <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['id']); ?>" class="text-decoration-none">
           <div class="container rounded mx-auto text-center" style="width: 258px; height: 250px; background-color: white;">
               <img src="<?php echo htmlspecialchars($row['image_path']); ?>" class="rounded-4" alt="Product Image" style="width: 100%; height: 100%; object-fit: cover;">
