@@ -19,6 +19,7 @@ include 'db.php'; // Conexão à base de dados
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jomhuria&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/fonts/customfonts.css">
+    <link href='https://fonts.googleapis.com/css?family=Jost' rel='stylesheet'>
 </head>
 <body>
     <body style="background-color: #EAEAEA;">
@@ -64,29 +65,133 @@ include 'db.php'; // Conexão à base de dados
   </div>
 </nav>
 
-<div class="container-fluid">
-<div class="row row-cols-1 row-cols-xxl-2 row-cols-lg-2 row-cols-sm-1 mt-5 ms-3">
-  <div class="col jomhuria-regular fs-custom">
-    Contactos:
-    <br>
-    <a href="" class="" style="text-decoration: none; color: black;">
-      <img src="imgs/icons/mail.svg" style="height: 50px; width: 50px;" alt="">
-    :cena&tal@email.com
-    </a>
-    
-    <br>
-    <a href="" style="text-decoration: none; color: black;">
-      <img src="imgs/icons/telephone-fill.svg" style="height: 50px; width: 50px;" alt="">
-    : 912345678
-    </a>
-    <br>
+  <!--Imagem principal-->
+  <div class="container-fluid p-0 rounded" style="background-color: transparent;">
+  <img class="object-fit-contain" src="imgs/hero_contactos.svg" style="object-fit: contain; width: 100%; height: 100%;" alt="">
   </div>
-  <div class="col jomhuria-regular fs-custom">
-    Onde estamos: <br>
-    <iframe class="rounded" style="border: 0;height: 500px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3046.9750171180885!2d-8.455043323295397!3d40.20961867147372!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd22f8f0b85baeb7%3A0x190fc4c9387ddaaa!2sCoimbra%20Business%20School%20%7C%20ISCAC!5e0!3m2!1spt-PT!2spt!4v1730053466951!5m2!1spt-PT!2spt" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!--Coluna sem nada até lg-->
+      <div class="col-1 d-none d-lg-block">
+  
+      </div>
+  
+      <!--Coluna das redes sociais até lg-->
+      <div class="col d-none d-lg-block">
+        <div class="div mt-5">
+          <p style="font-family:Jost; font-size: 24px">
+            <img class="img-fluid me-5" src="imgs/icons/telephone-fill.svg" style="max-width: 53px; max-height: 53px; width: 100%;" alt="">
+            Contacto: +351 910 452 535
+          </p>
+          <p style="font-family:Jost; font-size: 24px">
+            <img class="img-fluid me-5" src="imgs/icons/mail.svg" style="max-width: 53px; max-height: 53px; width: 100%;" alt="">
+            Email: cenaetal@support.pt
+          </p>
+          <p style="font-family:Jost; font-size: 24px">
+            <img class="img-fluid me-5" src="imgs/icons/tiktok.svg" style="max-width: 53px; max-height: 53px; width: 100%;" alt="">
+            Tiktok: Cena&Tal
+          </p>
+          <p style="font-family:Jost; font-size: 24px">
+            <img class="img-fluid me-5" src="imgs/icons/instagram.svg" style="max-width: 53px; max-height: 53px; width: 100%;" alt="">
+            Instagram: Cena_&_Tal
+          </p>
+        </div>
+      </div>
+      <!--Coluna sem nada até lg-->
+      <div class="col-1 d-none d-lg-block">
+  
+      </div>
+      <!--Coluna dos inputs até lg-->
+      <div class="col d-none d-lg-block">
+        <!--Nome e Email-->
+        <div class="row mt-5">
+          <!--Input do nome-->
+          <div class="col">
+            <p style="font-family:Jost; font-size: 24px; margin-bottom: 0px;">
+              Nome:
+            </p>
+            <div class="input-group" style="height: 48px;">
+              <input type="text" class="form-control rounded-3 border-1" style="background-color: #ECECEC; line-height: 0;font-family: Jost; border-color: black;" name="nome">
+            </div>
+          </div>
+          <!--Input do Email-->
+          <div class="col">
+            <p style="font-family:Jost; font-size: 24px; margin-bottom: 0px;">
+              Email:
+            </p>
+            <div class="input-group" style="height: 48px;">
+              <input type="text" class="form-control rounded-3 border-1" style="background-color: #ECECEC; line-height: 0;font-family: Jost; border-color: black;" name="email">
+            </div>
+          </div>
+        </div>
+        <!--Input de Comentarios-->
+        <div class="row me-3">
+          <p style="font-family:Jost; font-size: 24px; margin-bottom: 0px;">
+            Mensagem:
+          </p>
+          <textarea class="form-control rounded-3 border-1 ms-3" style="background-color: #ECECEC; font-family: Jost; border-color: black; height: 217px; resize: vertical;" name="mensagem"></textarea>
+        </div>
+      </div>
+      <!--Coluna sem nada até lg-->
+      <div class="col-1 d-none d-lg-block ">
+  
+      </div>
+      <!--Conteúdo para Mobile-->
+      <div class="div mt-5 d-block d-lg-none">
+        <p style="font-family:Jost; font-size: 16px">
+          <img class="img-fluid me-5" src="imgs/icons/telephone-fill.svg" style="max-width: 30px; max-height: 30px; width: 100%;" alt="">
+          Contacto: +351 910 452 535
+        </p>
+        <p style="font-family:Jost; font-size: 16px">
+          <img class="img-fluid me-5" src="imgs/icons/mail.svg" style="max-width: 30px; max-height: 30px; width: 100%;" alt="">
+          Email: cenaetal@support.pt
+        </p>
+        <p style="font-family:Jost; font-size: 16px">
+          <img class="img-fluid me-5" src="imgs/icons/tiktok.svg" style="max-width: 30px; max-height: 30px; width: 100%;" alt="">
+          Tiktok: Cena&Tal
+        </p>
+        <p style="font-family:Jost; font-size: 16px">
+          <img class="img-fluid me-5" src="imgs/icons/instagram.svg" style="max-width: 30px; max-height: 30px; width: 100%;" alt="">
+          Instagram: Cena_&_Tal
+        </p>
+      </div>
+      <div class="col d-block d-lg-none mb-5">
+        <!--Nome e Email-->
+        <div class="row mt-5">
+          <!--Input do nome-->
+          <div class="col">
+            <p style="font-family:Jost; font-size: 24px; margin-bottom: 0px;">
+              Nome:
+            </p>
+            <div class="input-group" style="height: 48px;">
+              <input type="text" class="form-control rounded-3 border-1" style="background-color: #ECECEC; line-height: 0;font-family: Jost; border-color: black;" name="nome">
+            </div>
+          </div>
+          <!--Input do Email-->
+          <div class="col">
+            <p style="font-family:Jost; font-size: 24px; margin-bottom: 0px;">
+              Email:
+            </p>
+            <div class="input-group" style="height: 48px;">
+              <input type="text" class="form-control rounded-3 border-1" style="background-color: #ECECEC; line-height: 0;font-family: Jost; border-color: black;" name="email">
+            </div>
+          </div>
+        </div>
+        <!--Input de Comentarios-->
+        <div class="row ms-1 me-1">
+          <p style="font-family:Jost; font-size: 24px; margin-bottom: 0px;">
+            Mensagem:
+          </p>
+          <textarea class="form-control rounded-3 border-1" style="background-color: #ECECEC; font-family: Jost; border-color: black; height: 217px; resize: vertical;" name="mensagem"></textarea>
+          <button type="submit" class="btn jomhuria-regular mb-4 mt-3 rounded" style="background-color: black; color: white; max-width: 150px;">
+            <img src="imgs/icons/enviar_branco.svg" alt="">
+        </button>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-</div>
+  
 
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>

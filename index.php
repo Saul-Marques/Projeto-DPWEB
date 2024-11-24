@@ -97,7 +97,7 @@ $result = $conn->query($sql);
 
   <!--Slogan-->
   <div class="container rounded text-center jomhuria-regular fs-custom" style="margin-top: 27px; background-color: white;">
-    (Somos bué sigma)
+    (Slogan)
   </div>
 
   <!--Categorias-->
@@ -115,8 +115,9 @@ $result = $conn->query($sql);
           </a>
           <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['id']); ?>" class="text-decoration-none">
           <div class="container rounded mx-auto text-center" style="width: 258px; height: 250px; background-color: white;">
-              <img src="<?php echo htmlspecialchars($row['image_path']); ?>" class="rounded-4" alt="Product Image" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="<?php echo htmlspecialchars($row['image_path']); ?>" class="rounded-4" alt="Product Image" style="width: 100%; height: 100%; object-fit: cover;">
           </div>
+
           </a>
           <div class="card-body">
             <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['id']); ?>" class="text-decoration-none " style="color: #000000">
