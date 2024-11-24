@@ -4,7 +4,6 @@
 - [x] Inserção e "unlisting" de artigos
 - [X] Visualização de produtos
 - [ ] Agrupamento por categorias
-- [x] Menu de contexto
 - [ ] Página de Administração
 - [x] Login e registo de utilizadores
 - [ ] Handling de erros com páginas para isso
