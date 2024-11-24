@@ -7,6 +7,7 @@
 - [x] Menu de contexto
 - [ ] Página de Administração
 - [x] Login e registo de utilizadores
+- [ ] Handling de erros com páginas para isso
 ### Lista de funcionalidades extra:
 - [ ] Chat (Deprecated)
 - [ ] Leilões (WIP)
@@ -23,3 +24,4 @@
 - [X] Página de utilizador
 - [ ] Página de utilizador (guest) (WIP, backend já está pronta) 
 - [ ] "Carrinho" (WIP)
+- [ ] Página quando acontece um erro
