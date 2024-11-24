@@ -6,11 +6,12 @@
 - [ ] Agrupamento por categorias
 - [x] Menu de contexto
 - [ ] Página de Administração
+- [x] Login e registo de utilizadores
 ### Lista de funcionalidades extra:
-- [ ] Chat
+- [ ] Chat (Deprecated)
 - [ ] Leilões (WIP)
 - [ ] Adicionar Produtos aos "Favoritos"
-- [ ] Comprar produtos na hora
+- [ ] Comprar produtos na hora (WIP)
 - [ ] Simulação de transações
 ### Lista de páginas estáticas:
 - [x] Index
