@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 18, 2024 at 03:44 PM
+-- Generation Time: Nov 25, 2024 at 06:39 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,9 +18,9 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `projetodpweb`
--- Este nome é ignorável ^
---                       |
+-- Database: `Web1`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -40,6 +40,14 @@ CREATE TABLE `produto` (
 -- Dumping data for table `produto`
 --
 
+INSERT INTO `produto` (`id`, `user_id`, `titulo`, `descricao`, `preco`, `imagem`) VALUES
+(32, 1, 'Produto 1', 'Produto teste, depois de apagar os outros todos', 30.5, NULL),
+(33, 1, 'Carro bacano', 'Carro muito bom', 500000, NULL),
+(34, 13, 'Carro bem podre', 'Carro nÃ£o vale grande coisa', 100.5, NULL),
+(35, 2, 'Peruca Usada', 'Peruca JÃ¡ usada no halloween', 200, NULL),
+(36, 2, 'Carro ok', 'Carro esteve presente num acidente LIGEIRO e ficou traumatizado', 2000, NULL),
+(37, 12, 'Crocodilo barato', 'Crocodilo proveniente de fontes fidedignas', 70, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -55,6 +63,17 @@ CREATE TABLE `produto_imagens` (
 --
 -- Dumping data for table `produto_imagens`
 --
+
+INSERT INTO `produto_imagens` (`id`, `produto_id`, `image_path`) VALUES
+(24, 32, 'imgs/Kookaburra-best.jpeg'),
+(25, 32, 'imgs/2810-Crocodilo-gigante-layout_site.png'),
+(26, 33, 'imgs/a67484147bae5b62c7b522653ee14229-1-600x630.jpg'),
+(27, 34, 'imgs/dsc_5073.png'),
+(28, 35, 'imgs/peruca-70-s-homem.jpg'),
+(29, 36, 'imgs/honda_civic_1995_honda_civic_vtec_1_5i_ls_900_euro_7390126691242405423.jpg'),
+(30, 36, 'imgs/465541280_10226387419460389_8685852876173240736_n.jpg'),
+(31, 37, 'imgs/2810-Crocodilo-gigante-layout_site.png');
+
 -- --------------------------------------------------------
 
 --
@@ -78,6 +97,16 @@ CREATE TABLE `users` (
 --
 -- Dumping data for table `users`
 --
+
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `imagem`, `localidade`, `cidade`, `cp`, `telemovel`, `biografia`, `data`) VALUES
+(1, 'Saul', '$2y$10$gcDnaR3v/pE54FLYlzDQ8.JuwhLjQQEFEzVmm4i0CErOnXX8JypUu', 'saul_marques10@hotmail.com', '/opt/lampp/htdocs/projeto/imgs/icons/account_circle.svg', 'Casais do Campo', 'Coimbra', '3045383', 926382343, 'Teste se mudou', '2024-11-12'),
+(2, 'Henrique', '$2y$10$zuZA/4LXwtyExEwCxnZOLevb1a8uBJPAftlmNQg.ra0VOy83oY8m6', 'henrique@example.com', '/opt/lampp/htdocs/projeto/imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, 'OlÃ¡, sou o Henrique ', '2024-11-12'),
+(7, 'Aleijado', '$2y$10$6gCSF96YLafzq45zn25ptux4/vb/R5dUfmdHw6Bue2.VTpdeDGkpG', 'aleijado@email.com', '/opt/lampp/htdocs/projeto/imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-11-12'),
+(9, 'becas', '$2y$10$TE.aRvUHcvuD4Ko3KVVksuWvVGp7K04j/GQDRStqTqh0EkcU61GCK', 'gajaqueamaosaul@gmail.com', '/opt/lampp/htdocs/projeto/imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-11-12'),
+(10, 'Vicente', '$2y$10$CmnENrM2jS5axk.v2t33p.G/adOe9nKZuQ.9WTBXPQKmtMreqZtGG', 'vicente@gmail.com', '/opt/lampp/htdocs/projeto/imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-11-12'),
+(11, 'Vicente Rizza', '$2y$10$iWkE82x7RF91zlHjZXNNTuLgxr9wdH0iB1LgPoeqUssPHunS6jGv.', 'vicentedarizz@gmail.com', '/opt/lampp/htdocs/projeto/imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-11-12'),
+(12, 'Pedro Moreira', '$2y$10$WZwyCsedl5.gl/tdgSE2memc3VHiuEPCmFqvV58hWpo9FpJ4qaMIC', 'pedromoreira@gay.com', '/opt/lampp/htdocs/projeto/imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-11-12'),
+(13, 'Pedro Santos', '$2y$10$2i1vZ85FK8p91s7yXYcCJezUPjvGPB6XbaUS1wVN38w.q7Un2eHZ6', 'aleijado@gmail.com', '/opt/lampp/htdocs/projeto/imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-11-25');
 
 --
 -- Indexes for dumped tables
@@ -111,19 +140,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `produto_imagens`
 --
 ALTER TABLE `produto_imagens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
