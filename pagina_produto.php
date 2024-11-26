@@ -7,6 +7,8 @@ include 'db.php';
 
 if (isset($_GET['id'])) {
     $productId = $_GET['id'];
+
+    // Fetch product details
     $sql = "SELECT p.*, u.username, pi.image_path 
             FROM produto p 
             JOIN users u ON p.user_id = u.id
@@ -18,14 +20,43 @@ if (isset($_GET['id'])) {
     $result = $stmt->get_result();
     $product = $result->fetch_assoc();
 
-$images_query = $conn->prepare("SELECT image_path FROM produto_imagens WHERE produto_id = ?");
-$images_query->bind_param("i", $productId);
-$images_query->execute();
-$images_result = $images_query->get_result();
-    // Verifica se produto existe
+    // Fetch all images for the product
+    $images_query = $conn->prepare("SELECT image_path FROM produto_imagens WHERE produto_id = ?");
+    $images_query->bind_param("i", $productId);
+    $images_query->execute();
+    $images_result = $images_query->get_result();
+
+    // Check if product exists
     if (!$product) {
-        echo "Produto nao encontrado";
+        echo "Produto não encontrado";
         exit;
+    }
+
+    // Fetch highest bid (maior_valor)
+    $bid_query = $conn->prepare("SELECT MAX(valor) AS maior_valor FROM bids WHERE produto_id = ?");
+    $bid_query->bind_param("i", $productId);
+    $bid_query->execute();
+    $bid_result = $bid_query->get_result();
+    $bid_data = $bid_result->fetch_assoc();
+    $maior_valor = $bid_data['maior_valor'] ?? 0; // Default é 0 se não houver bids
+
+    // Handle bid submission
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['bid']) && $isLoggedIn) {
+        $valor = floatval($_POST['bid']);
+        $userId = $_SESSION['user_id'];
+
+        if ($valor > $maior_valor) {
+            $insert_bid = $conn->prepare("INSERT INTO bids (produto_id, user_id, valor) VALUES (?, ?, ?)");
+            $insert_bid->bind_param("iid", $productId, $userId, $valor);
+            if ($insert_bid->execute()) {
+                $maior_valor = $valor; // Atualiza a maior bid
+                echo "<script>alert('Lance registado com sucesso!');</script>";
+            } else {
+                echo "<script>alert('Erro ao registar o lance.');</script>";
+            }
+        } else {
+            echo "<script>alert('O lance deve ser maior que o valor atual.');</script>";
+        }
     }
 } else {
     echo "Sem ID do produto";
@@ -137,18 +168,20 @@ $images_result = $images_query->get_result();
                 Preço: <?php echo htmlspecialchars($product['preco']); ?>€
             </p>
           <p class="jomhuria-regular fs-1" style="line-height: 1;">
-            Licitação atual:
+            Licitação atual: <?php echo htmlspecialchars($maior_valor); ?>€
           </p>
           <p class="jomhuria-regular fs-4 g-0 mb-0 mt-2" style="line-height: 0; color: #5E5E5E;">
             Termina em:
           </p>
           <br>
+          <form method="POST">
           <div class="input-group">
-            <input type="text" class="form-control rounded-4 border-1 jomhuria-regular fs-3 align-self-center me-5" style="background-color: #BBBBBB; line-height: 0; border-color: black;" placeholder="Valor a licitar" name="licitacao" required>
+            <input type="text" class="form-control rounded-4 border-1 jomhuria-regular fs-3 align-self-center me-5" id="bid" min="<?php echo $maior_valor + 0.01; ?>" style="background-color: #BBBBBB; line-height: 0; border-color: black;" placeholder="Valor a licitar" name="bid">
           </div>
-          <div class="btn rounded-4 border-1 jomhuria-regular fs-1 align-self-center me-5 mt-3" style="background-color: #BBBBBB; border-color: black; width: 100%; line-height: 1;">
+          <button type="submit" class="btn rounded-4 border-1 jomhuria-regular fs-1 align-self-center me-5 mt-3" style="background-color: #BBBBBB; border-color: black; width: 100%; line-height: 1;">
             Licitar
-          </div>
+          </button>
+          </form>
 
           <div class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
             Comprar agora.
@@ -201,19 +234,20 @@ $images_result = $images_query->get_result();
                 Preço: <?php echo htmlspecialchars($product['preco']); ?>€
             </p>
           <p class="jomhuria-regular fs-1" style="line-height: 1;">
-            Licitação atual:
+          Licitação atual: <?php echo htmlspecialchars($maior_valor); ?>€
           </p>
           <p class="jomhuria-regular fs-4 g-0 mb-0 mt-2" style="line-height: 0; color: #5E5E5E;">
             Termina em:
           </p>
           <br>
+          <form method="POST">
           <div class="input-group">
-            <input type="text" class="form-control rounded-4 border-1 jomhuria-regular fs-3 align-self-center me-5" style="background-color: #BBBBBB; line-height: 0; border-color: black;" placeholder="Valor a licitar" name="licitacao" required>
+            <input type="text" class="form-control rounded-4 border-1 jomhuria-regular fs-3 align-self-center me-5" id="bid" min="<?php echo $maior_valor + 0.01; ?>" style="background-color: #BBBBBB; line-height: 0; border-color: black;" placeholder="Valor a licitar" name="bid">
           </div>
-          <div class="btn rounded-4 border-1 jomhuria-regular fs-1 align-self-center me-5 mt-3" style="background-color: #BBBBBB; border-color: black; width: 100%; line-height: 1;">
+          <button type="submit" class="btn rounded-4 border-1 jomhuria-regular fs-1 align-self-center me-5 mt-3" style="background-color: #BBBBBB; border-color: black; width: 100%; line-height: 1;">
             Licitar
-          </div>
-
+          </button>
+          </form>
           <div class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
             Comprar agora.
           </div>
