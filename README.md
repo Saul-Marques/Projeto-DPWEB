@@ -38,10 +38,6 @@
 - **Página de Erro:** Páginas dedicadas para tratamento de erros (em progresso).  
 ---
 
-**Desenvolvido por [Saul Marques](https://github.com/Saul-Marques)** 👨‍💻
-**Desenvolvido por [Vicente Rosa](https://github.com/VACR03)** 👨‍💻
-
-
----
-
-*Nota: Este projeto é uma iniciativa acadêmica e está em constante evolução para melhorar a experiência dos usuários.*
+-**Desenvolvido por [Saul Marques](https://github.com/Saul-Marques)** 👨‍💻
+<br/>
+-**Desenvolvido por [Vicente Rosa](https://github.com/VACR03)** 👨‍💻
