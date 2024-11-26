@@ -96,28 +96,26 @@ $result = $conn->query($sql);
 
 
   <!--Slogan-->
-  <div class="container rounded text-center jomhuria-regular fs-custom" style="margin-top: 27px; background-color: white;">
-    (Slogan)
+  <div class="container rounded text-center jomhuria-regular fs-custom" style="background-color: transparent;">
+    Cena&Tal – Comprar e vender, nunca foi tão natural!
   </div>
-
   <!--Categorias-->
 
   <div class="container-fluid ms-auto me-auto" style="background-color: #D9D9D9; margin-top: 40px;">
   </div>
   <!--Começa o display das cards-->
-  <div class="container-fluid mt-5 mb-5">
-    <div class="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 row-cols-1 gy-4 ms-3 me-3">
+  <div class="container-fluid mt-5 mb-5 ">
+    <div class=" container-fluid mt-5 mb-5 row row-cols-xxl-5 row-cols-xl-4 row-cols-md-3 row-cols-1 gy-4 mx-auto">
     <?php while($row = $result->fetch_assoc()): ?>
-      <div class="col">
-        <div class="card rounded-5" style="width: 300px; height: 400px; background-color: white;">
+      <div class="col me-0">
+        <div class="card rounded-2" style="width: 100%; height: 400px; background-color: white;">
           <a href="pagina_utilizador_guest.php?user_id=<?php echo htmlspecialchars($row['user_id']); ?>" class="card-header border-0 bg-transparent mt-1" style="text-decoration: none">
               <?php echo htmlspecialchars($row['username']); ?>
           </a>
           <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['id']); ?>" class="text-decoration-none">
-          <div class="container rounded mx-auto text-center" style="width: 258px; height: 250px; background-color: white;">
-            <img src="<?php echo htmlspecialchars($row['image_path']); ?>" class="rounded-4" alt="Product Image" style="width: 100%; height: 100%; object-fit: cover;">
-          </div>
-
+            <div class="container p-0" style="width: 100%; height: 250px; background-color: white;">
+              <img src="<?php echo htmlspecialchars($row['image_path']); ?>" class="img-fluid" alt="Product Image" style="width: 100%; height: 100%; object-fit:cover;">
+            </div>
           </a>
           <div class="card-body">
             <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['id']); ?>" class="text-decoration-none " style="color: #000000">

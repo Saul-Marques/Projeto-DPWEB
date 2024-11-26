@@ -137,9 +137,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <img src="imgs/icons/account_circle.svg" style="height: 85px; width: 85px;" alt="">
                 </a>
                 <br>
-                <a class="btn jomhuria-regular rounded-4 fs-3" style="background-color: #BBBBBB; border-color: black; line-height: 0.75;" href="">
-                    Partilhar
-                </a>
             </div>
             
         </div>
@@ -160,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         placeholder="Biografia" value="<?php echo htmlspecialchars($userData['biografia']); ?>" name="biografia">
                 </div>
             </div>
-            <div class="col">
+            <div class="col d-none d-lg-block">
                 
             </div>
             <div class="row mb-4">
@@ -175,6 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
     </form>
 
+    <form method="POST">
         <div class="row mt-5 rounded mb-5" style="background-color: white;">
             <p class="jomhuria-regular fs-1 mt-4" style="line-height: 1;">Morada</p>
             <div class="col-4 ms-4">
@@ -182,10 +180,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p class="jomhuria-regular fs-2 mt-5" style="line-height: 1;">Cidade: </p>
                 <p class="jomhuria-regular fs-2 mt-5" style="line-height: 1;">Código Postal: </p>
                 <p class="jomhuria-regular fs-2 mt-5" style="line-height: 1;">Telemóvel: </p>
-
-
-
-
             </div>
             <div class="col mt-3">
                 
@@ -209,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <!--Coluna sem nada-->
-            <div class="col">
+            <div class="col d-none d-lg-block">
 
             </div>
 
@@ -224,6 +218,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             
         </div>
+        </form>
         
 
     </div>
