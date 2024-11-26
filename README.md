@@ -17,7 +17,7 @@
 - ⬜ **Favoritos:** Permite adicionar produtos à lista de favoritos para visualização posterior.  
 - ⬜ **Compra Imediata:** Opção de comprar produtos diretamente, sem necessidade de interações extras (em progresso).  
 - ⬜ **Simulação de Transações:** Simula o processo de transação para uma experiência mais realista.  
-- ⬜ **Chat (Descontinuado):** Sistema de chat que estava planejado para permitir comunicação entre compradores e vendedores (descontinuado).  
+- ⬜ **Chat (Descontinuado):** Sistema de chat que estava planeado para permitir comunicação entre compradores e vendedores (descontinuado).  
 
 ---
 
