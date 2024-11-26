@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 25, 2024 at 06:39 PM
+-- Host: 127.0.0.1
+-- Generation Time: Nov 26, 2024 at 11:31 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,8 +18,33 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `Web1`
+-- Database: `web1`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bids`
+--
+
+CREATE TABLE `bids` (
+  `id` int(11) NOT NULL,
+  `produto_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `valor` float NOT NULL,
+  `licitado_a` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bids`
+--
+
+INSERT INTO `bids` (`id`, `produto_id`, `user_id`, `valor`, `licitado_a`) VALUES
+(1, 34, 1, 4443, '2024-11-26 10:23:17'),
+(2, 34, 1, 343434000, '2024-11-26 10:25:25'),
+(3, 35, 1, 201, '2024-11-26 10:25:50'),
+(4, 32, 1, 30.5, '2024-11-26 10:28:32'),
+(5, 32, 1, 30.6, '2024-11-26 10:28:44');
 
 -- --------------------------------------------------------
 
@@ -113,6 +138,14 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `imagem`, `localidad
 --
 
 --
+-- Indexes for table `bids`
+--
+ALTER TABLE `bids`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `produto_id` (`produto_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `produto`
 --
 ALTER TABLE `produto`
@@ -137,6 +170,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `bids`
+--
+ALTER TABLE `bids`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `produto`
 --
 ALTER TABLE `produto`
@@ -157,6 +196,13 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `bids`
+--
+ALTER TABLE `bids`
+  ADD CONSTRAINT `bids_ibfk_1` FOREIGN KEY (`produto_id`) REFERENCES `produto` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `bids_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `produto`
