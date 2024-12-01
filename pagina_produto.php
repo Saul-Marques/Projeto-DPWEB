@@ -26,13 +26,12 @@ if (isset($_GET['id'])) {
     $images_query->execute();
     $images_result = $images_query->get_result();
 
-    // Check if product exists
     if (!$product) {
         echo "Produto não encontrado";
         exit;
     }
 
-    // Fetch highest bid (maior_valor)
+    // Procurar o maior bid (maior_valor)
     $bid_query = $conn->prepare("SELECT MAX(valor) AS maior_valor FROM bids WHERE produto_id = ?");
     $bid_query->bind_param("i", $productId);
     $bid_query->execute();
@@ -40,7 +39,18 @@ if (isset($_GET['id'])) {
     $bid_data = $bid_result->fetch_assoc();
     $maior_valor = $bid_data['maior_valor'] ?? 0; // Default é 0 se não houver bids
 
-    // Handle bid submission
+    $bid_history_query = $conn->prepare("
+    SELECT b.valor, b.timestamp, u.username 
+    FROM bids b
+    JOIN users u ON b.user_id = u.id
+    WHERE b.produto_id = ?
+    ORDER BY b.timestamp DESC
+    ");
+    $bid_history_query->bind_param("i", $productId);
+    $bid_history_query->execute();
+    $bid_history_result = $bid_history_query->get_result();
+
+    // Handle à submissão
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['bid']) && $isLoggedIn) {
         $valor = floatval($_POST['bid']);
         $userId = $_SESSION['user_id'];
@@ -159,7 +169,7 @@ if (isset($_GET['id'])) {
       <div class="row rounded" style="background-color: white;">
         <div class="col">
           <p class="jomhuria-regular fs-4 g-0 mb-0 mt-2" style="line-height: 1; color: #2C2C2C;">
-            Publicado a:
+            Publicado a: <?php echo htmlspecialchars($product['adicionado_a']);?>
           </p>
           <p class="jomhuria-regular fs-1">
                 Utilizador: <?php echo htmlspecialchars($product['username']); ?>
@@ -225,7 +235,7 @@ if (isset($_GET['id'])) {
       <div class="row rounded" style="background-color: white;">
         <div class="col">
           <p class="jomhuria-regular fs-4 g-0 mb-0 mt-2" style="line-height: 1; color: #2C2C2C;">
-            Publicado a:
+            Publicado a: <?php echo htmlspecialchars($product['adicionado_a']);?>
           </p>
           <p class="jomhuria-regular fs-1">
                 Utilizador: <?php echo htmlspecialchars($product['username']); ?>
@@ -248,9 +258,9 @@ if (isset($_GET['id'])) {
             Licitar
           </button>
           </form>
-          <div class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
+          <button class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
             Comprar agora.
-          </div>
+          </button>
         </div>
         
       </div>
@@ -266,7 +276,14 @@ if (isset($_GET['id'])) {
           <p class="jomhuria-regular fs-1" style="line-height: 1; color: #000000;">
             Ultimas licitações:
           </p>
-          <pre class="jomhuria-regular fs-3 mb-5" style="line-height: 1; color: #5E5E5E;">(nome de utilizador) Há 00h                                10.00€</pre>
+          <?php while ($bid = $bid_history_result->fetch_assoc()): ?>
+    <pre class="jomhuria-regular fs-3 mb-5" style="line-height: 1; color: #5E5E5E;"><?php echo htmlspecialchars($bid['username']); ?>       <?php 
+            $timeElapsed = time() - strtotime($bid['timestamp']);
+            $hoursElapsed = floor($timeElapsed / 3600);
+            echo "há {$hoursElapsed}h";
+        ?> <?php echo number_format($bid['valor'], 2); ?>€
+    </>
+<?php endwhile; ?></pre>
         </div>
         
       </div>
