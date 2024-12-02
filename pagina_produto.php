@@ -9,7 +9,7 @@ if (isset($_GET['id'])) {
     $productId = $_GET['id'];
 
     // Fetch product details
-    $sql = "SELECT p.*, u.username, pi.image_path 
+    $sql = "SELECT p.*, u.username,u.id,u.imagem, pi.image_path 
             FROM produto p 
             JOIN users u ON p.user_id = u.id
             LEFT JOIN produto_imagens pi ON p.id = pi.produto_id 
@@ -172,8 +172,11 @@ if (isset($_GET['id'])) {
             Publicado a: <?php echo htmlspecialchars($product['adicionado_a']);?>
           </p>
           <p class="jomhuria-regular fs-1">
-                Utilizador: <?php echo htmlspecialchars($product['username']); ?>
-            </p>
+            Utilizador: 
+          <a href="pagina_utilizador_guest.php?user_id=<?php echo htmlspecialchars($product['id']); ?>" class="jomhuria-regular fs-1" style="text-decoration: none; color:#000000">
+              <?php echo htmlspecialchars($product['username']); ?>
+          </a>
+          </p>
             <p class="jomhuria-regular fs-1">
                 Preço: <?php echo htmlspecialchars($product['preco']); ?>€
             </p>
@@ -205,8 +208,11 @@ if (isset($_GET['id'])) {
             Do Utilizador: 
           </p>
           <p class="jomhuria-regular fs-custom" style="line-height: 1; color: #000000;">
-            <img src="imgs/icons/account_circle.svg" alt="">
-            <?php echo htmlspecialchars($product['username']); ?>
+            <img src="<?php echo htmlspecialchars($product['imagem']); ?>" alt="">
+            <a href="pagina_utilizador_guest.php?user_id=<?php echo htmlspecialchars($product['id']); ?>" style="text-decoration:none; color: black">
+              <?php echo htmlspecialchars($product['username']); ?>
+            </a>
+            
           </p>
           <p class="jomhuria-regular fs-1" style="line-height: 1; color: #000000;">
             Ultimas licitações:
@@ -238,8 +244,11 @@ if (isset($_GET['id'])) {
             Publicado a: <?php echo htmlspecialchars($product['adicionado_a']);?>
           </p>
           <p class="jomhuria-regular fs-1">
-                Utilizador: <?php echo htmlspecialchars($product['username']); ?>
-            </p>
+            Utilizador: 
+          <a href="pagina_utilizador_guest.php?user_id=<?php echo htmlspecialchars($product['id']); ?>" class="jomhuria-regular fs-1" style="text-decoration: none; color:#000000">
+              <?php echo htmlspecialchars($product['username']); ?>
+          </a>
+          </p>
             <p class="jomhuria-regular fs-1">
                 Preço: <?php echo htmlspecialchars($product['preco']); ?>€
             </p>
@@ -270,8 +279,10 @@ if (isset($_GET['id'])) {
             Do Utilizador: 
           </p>
           <p class="jomhuria-regular fs-custom" style="line-height: 1; color: #000000;">
-            <img src="imgs/icons/account_circle.svg" alt="">
-            <?php echo htmlspecialchars($product['username']); ?>
+            <img src="<?php echo htmlspecialchars($product['imagem']); ?>" alt="">
+            <a href="pagina_utilizador_guest.php?user_id=<?php echo htmlspecialchars($product['id']); ?>" style="text-decoration:none; color: black">
+              <?php echo htmlspecialchars($product['username']); ?>
+            </a>
           </p>
           <p class="jomhuria-regular fs-1" style="line-height: 1; color: #000000;">
             Ultimas licitações:
