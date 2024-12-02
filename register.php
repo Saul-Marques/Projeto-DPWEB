@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="container p-0 rounded mt-5" style="background-color: white; height: 698px; overflow: hidden;">
             <div class="row">
                 <div class="col-6 d-none d-lg-block">
-                    <img class="img-fluid d-none d-lg-block p-0 g-0 rounded-start object-fit-cover" style="object-fit:fill;" src="imgs/noise.jpg" alt="">
+                    <img class="img-fluid d-none d-lg-block p-0 g-0 rounded-start object-fit-cover" style="object-fit:fill;" src="imgs/noise2.jpg" alt="">
                 </div>
                 <div class="col-6">
                     <h3 class="jomhuria-regular fs-custom mt-5">Registado com sucesso!</h3>
