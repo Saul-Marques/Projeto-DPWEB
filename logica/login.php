@@ -1,5 +1,5 @@
 <?php
-include 'db.php';
+include '../includes/db.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
-            header('Location: index.php');
+            header('Location: ../index.php');
             exit();
         } else {
             echo "Invalid password.";

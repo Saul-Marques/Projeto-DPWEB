@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
 $isLoggedIn = isset($_SESSION['user_id']);
-include 'db.php';
+include 'includes/db.php';
 
 if (isset($_GET['id'])) {
     $productId = $_GET['id'];
@@ -107,7 +107,7 @@ if (isset($_GET['id'])) {
           <a class="btn" href="add_produto.html">
             <img src="imgs/icons/iconplus.svg" alt="">
           </a>
-          <a class="btn" href="logout.php">
+          <a class="btn" href="logica/logout.php">
             <img src="imgs/icons/logout.svg" style="width:20px; height:20px;" alt="">
           </a>
         <!-- 'Login' e 'Registar' serão apresentados se o user nao estiver logado -->
