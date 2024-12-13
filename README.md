@@ -30,10 +30,10 @@
 - **Contactos:** Informações de contacto e suporte.  
 - **Adicionar Produto:** Formulário para inserção de novos produtos na plataforma.  
 - **Página do Produto:** Exibição detalhada de informações sobre um produto.  
-- **Página de Utilizador:** Página personalizada para o perfil do utilizador.  
+- **Página de Utilizador:** Página personalizada para o perfil do utilizador.
+- **Página de Utilizador (Guest):** Exibição pública de perfis de utilizador (backend já concluído). 
 
 ### 🚧 Páginas em Desenvolvimento  
-- **Página de Utilizador (Guest):** Exibição pública de perfis de utilizador (backend já concluído).  
 - **Carrinho de Compras:** Funcionalidade para gerenciar produtos selecionados para compra (em progresso).  
 - **Página de Erro:** Páginas dedicadas para tratamento de erros (em progresso).  
 ---
