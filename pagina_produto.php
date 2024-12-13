@@ -61,6 +61,7 @@ if (isset($_GET['id'])) {
             if ($insert_bid->execute()) {
                 $maior_valor = $valor; // Atualiza a maior bid
                 echo "<script>alert('Lance registado com sucesso!');</script>";
+                header("pagina_produto.php");
             } else {
                 echo "<script>alert('Erro ao registar o lance.');</script>";
             }
@@ -288,13 +289,21 @@ if (isset($_GET['id'])) {
             Ultimas licitações:
           </p>
           <?php while ($bid = $bid_history_result->fetch_assoc()): ?>
-    <pre class="jomhuria-regular fs-3 mb-5" style="line-height: 1; color: #5E5E5E;"><?php echo htmlspecialchars($bid['username']); ?>       <?php 
-            $timeElapsed = time() - strtotime($bid['timestamp']);
-            $hoursElapsed = floor($timeElapsed / 3600);
-            echo "há {$hoursElapsed}h";
-        ?> <?php echo number_format($bid['valor'], 2); ?>€
-    </>
-<?php endwhile; ?></pre>
+            <p class="jomhuria-regular fs-3 mb-5" style="line-height: 1; color: #5E5E5E;">
+                <?php echo htmlspecialchars($bid['username']); ?>       
+                <?php 
+                    $timeElapsed = time() - strtotime($bid['timestamp']); // Calculate elapsed time in seconds
+                    if ($timeElapsed < 3600) { // Less than an hour
+                        $minutesElapsed = floor($timeElapsed / 60);
+                        echo "há {$minutesElapsed}m"; // Display in minutes
+                    } else {
+                        $hoursElapsed = floor($timeElapsed / 3600);
+                        echo "há {$hoursElapsed}h"; // Display in hours
+                    }
+                ?> 
+                <?php echo number_format($bid['valor'], 2); ?>€
+            </p>
+          <?php endwhile; ?>
         </div>
         
       </div>

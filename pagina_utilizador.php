@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cidade = $_POST['cidade'] ?? $userData['cidade'];
     $cp = $_POST['cp'] ?? $userData['cp'];
     $telemovel = $_POST['telemovel'] ?? $userData['telemovel'];
-
+    $email = $_POST['email'] ?? $userData['email'];
     $updateQuery = $conn->prepare("
         UPDATE users 
         SET username = ?, biografia = ?, localidade = ?, cidade = ?, cp = ?, telemovel = ?
@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $userData['cidade'] = $cidade;
         $userData['cp'] = $cp;
         $userData['telemovel'] = $telemovel;
+        $userData['email'] = $email;
     } else {
         echo "Failed to update profile.";
     }
@@ -118,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     </div>
     <div class="col">
-        <p class="jomhuria-regular fs-custom">Perfil de <?php echo htmlspecialchars($userData['username']); ?></p>
+        <p class="jomhuria-regular fs-custom">Bem vindo ao seu perfil, <?php echo htmlspecialchars($userData['username']); ?>!</p>
         <div class="row rounded" style="background-color: white;">
             <div class="col-10 ms-4">
             <p class="jomhuria-regular fs-1 mt-4" style="line-height: 1;"><?php echo htmlspecialchars($userData['username']); ?></p>
@@ -146,6 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-4 ms-4">
                 <p class="jomhuria-regular fs-2 mt-4" style="line-height: 1;">Nome: </p>
                 <p class="jomhuria-regular fs-2 mt-5" style="line-height: 1;">Biografia: </p>
+                <p class="jomhuria-regular fs-2 mt-4" style="line-height: 1;">Email: </p>
             </div>
             <div class="col mt-3">
                 <div class="input-group ">
@@ -155,6 +157,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="input-group mt-4 mb-4">
                     <input type="text"  class="form-control rounded-4 jomhuria-regular fs-3 align-self-center me-5" style="background-color: #d9d9d9; line-height: 0;"  
                         placeholder="Biografia" value="<?php echo htmlspecialchars($userData['biografia']); ?>" name="biografia">
+                </div>
+                <div class="input-group mt-4 mb-4">
+                    <input type="text"  class="form-control rounded-4 jomhuria-regular fs-3 align-self-center me-5" style="background-color: #d9d9d9; line-height: 0;"  
+                        placeholder="email" value="<?php echo htmlspecialchars($userData['email']); ?>" name="email">
                 </div>
             </div>
             <div class="col d-none d-lg-block">

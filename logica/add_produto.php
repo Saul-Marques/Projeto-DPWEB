@@ -16,15 +16,15 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($_POST['preco'] < 9999)) {
     $descricao = $_POST['descricao'];
     $preco = $_POST['preco'];
 
-    // Insert the product into the database
+    // Inserir o produto na base de dados
     $sql = "INSERT INTO produto (user_id, titulo, descricao, preco) VALUES ('$user_id', '$titulo', '$descricao', '$preco')";
     if ($conn->query($sql) === TRUE) {
         $produto_id = $conn->insert_id; 
 
-        // Create a custom folder for the product images
+        // Criar uma pasta para cada produto baseado no produto_id
         $target_dir = "imgs/produtos/" . $produto_id . "/";
         if (!file_exists($target_dir)) {
-            mkdir($target_dir, 0777, true); // Create the directory if it doesn't exist
+            mkdir($target_dir, 0777, true);
         }
 
         $images = $_FILES['imagens'];
@@ -32,7 +32,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($_POST['preco'] < 9999)) {
             if ($i >= 7) break;
 
             $image_name = basename($images['name'][$i]);
-            $target_file = $target_dir . $image_name; // Update the target file path
+            $target_file = $target_dir . $image_name;
             $tmp_name = $images['tmp_name'][$i];
 
             if (getimagesize($tmp_name)) {
@@ -47,7 +47,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($_POST['preco'] < 9999)) {
             }
         }
 
-        // Optionally set the first image as the cover image
+        // A primeira imagem é a capa
         if (isset($images['name'][0])) {
             $first_image_path = $target_dir . basename($images['name'][0]);
             $cover_sql = "UPDATE produto SET imagem = '$first_image_path' WHERE id = '$produto_id'";
@@ -55,12 +55,12 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($_POST['preco'] < 9999)) {
         }
 
         echo "Produto adicionado com sucesso!";
-        header('Location: index.php');
+        header('Location: ../index.php');
     } else {
         echo "Erro: " . $sql . "<br>" . $conn->error;
     }
 
     $conn->close();
 } else {
-    header("Location: add_produto.html");
+    header("Location: ../add_produto.html");
 }
