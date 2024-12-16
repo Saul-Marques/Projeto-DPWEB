@@ -1,7 +1,9 @@
 <?php
+session_start();
+//apagar os erros depois de acabar
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-session_start();
+
 $isLoggedIn = isset($_SESSION['user_id']);
 include 'includes/db.php';
 
@@ -192,7 +194,7 @@ if (isset($_GET['id'])) {
           <div class="input-group">
             <input type="text" class="form-control rounded-4 border-1 jomhuria-regular fs-3 align-self-center me-5" id="bid" min="<?php echo $maior_valor + 0.01; ?>" style="background-color: #BBBBBB; line-height: 0; border-color: black;" placeholder="Valor a licitar" name="bid">
           </div>
-          <button type="submit" class="btn rounded-4 border-1 jomhuria-regular fs-1 align-self-center me-5 mt-3" style="background-color: #BBBBBB; border-color: black; width: 100%; line-height: 1;">
+          <button type="submit" class="btn rounded-4 border-1 jomhuria-regular fs-1 align-self-center me-5 mt-3" style="background-color: #000000; border-color: black; width: 100%; line-height: 1;color: white;">
             Licitar
           </button>
           </form>
@@ -264,8 +266,8 @@ if (isset($_GET['id'])) {
           <div class="input-group">
             <input type="text" class="form-control rounded-4 border-1 jomhuria-regular fs-3 align-self-center me-5" id="bid" min="<?php echo $maior_valor + 0.01; ?>" style="background-color: #BBBBBB; line-height: 0; border-color: black;" placeholder="Valor a licitar" name="bid">
           </div>
-          <button type="submit" class="btn rounded-4 border-1 jomhuria-regular fs-1 align-self-center me-5 mt-3" style="background-color: #BBBBBB; border-color: black; width: 100%; line-height: 1;">
-            Licitar
+          <button type="submit" class="btn rounded-4 border-1 jomhuria-regular fs-1 align-self-center me-5 mt-3" style="background-color: #000000; border-color: black; width: 100%; line-height: 1;color:white">
+            Licitar.
           </button>
           </form>
           <button class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
@@ -277,7 +279,7 @@ if (isset($_GET['id'])) {
       <div class="row rounded mt-3" style="background-color: white;">
         <div class="col">
           <p class="jomhuria-regular fs-1" style="line-height: 1; color: #5E5E5E;">
-            Do Utilizador: 
+            Do Utilizador : 
           </p>
           <p class="jomhuria-regular fs-custom" style="line-height: 1; color: #000000;">
             <img src="<?php echo htmlspecialchars($product['imagem']); ?>" alt="">
@@ -309,6 +311,7 @@ if (isset($_GET['id'])) {
       </div>
     </div>
   </div>
+  <?php include 'includes/footer.html' ?>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

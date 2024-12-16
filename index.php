@@ -1,7 +1,8 @@
 <?php
+//apagar este display de erros depois de acabar o desenvolvimento
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-session_start();
+
 $isLoggedIn = isset($_SESSION['user_id']);
 include 'includes/db.php'; // Conexão à base de dados
 
@@ -33,46 +34,7 @@ $result = $conn->query($sql);
 </head>
 <body style="background-color: #EAEAEA;">
 <!-- Navbar -->
-<nav class="navbar navbar-expand-sm" style="background-color: black;">
-  <div class="container-fluid">
-    <a class="navbar-brand align-self-center" href="index.php">
-      <img src="imgs/logo.svg" style="width:69px;" alt="">
-    </a>
-    <div class="d-flex align-items-center">
-      <!-- Icons são apresantados se o user estiver logado -->
-      <?php if ($isLoggedIn == true): ?>
-        <a class="btn" href="pagina_utilizador.php">
-          <img src="imgs/icons/iconperson.svg" alt="">
-        </a>
-        <a class="btn" href="#">
-          <img src="imgs/icons/cart.svg" alt="">
-        </a>
-        <a class="btn" href="add_produto.html">
-          <img src="imgs/icons/iconplus.svg" alt="">
-        </a>
-        <a class="btn" href="logica/logout.php">
-          <img src="imgs/icons/logout.svg" style="width:20px; height:20px;" alt="">
-        </a>
-      <!-- 'Login' e 'Registar' serão apresentados se o user nao estiver logado -->
-      <?php else: ?>
-        <a class="btn jomhuria-regular fs-2" style="color: white;" href="login.html">Login</a>
-        <a class="btn jomhuria-regular fs-2" style="color: white;" href="registar.html">Registar</a>
-      <?php endif; ?>
-
-      <!-- Context menu -->
-      <div class="dropstart ms-3">
-        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: black;">
-          <img src="imgs/icons/iconcont.svg" alt="">
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="contactos.php">Contactos</a></li>
-          <li><a class="dropdown-item" href="faqs.html">FAQs</a></li>
-          <li><a class="dropdown-item" href="#">Mais alguma cena aqui</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</nav>
+ <?php include 'includes/navbar.php' ?>
 
   <!--Imagem principal-->
 <div class="container-fluid p-0 rounded" style="background-color: transparent;">
@@ -105,7 +67,7 @@ $result = $conn->query($sql);
   </div>
   <!--Começa o display das cards-->
   <div class="container-fluid mt-5 mb-5 ">
-    <div class=" container-fluid mt-5 mb-5 row row-cols-xxl-5 row-cols-xl-4 row-cols-md-3 row-cols-1 gy-4 mx-auto">
+    <div class=" container-fluid mt-5 mb-5 row row-cols-xxl-5 row-cols-xl-4 row-cols-md-3 row-cols-sm-2 row-cols-1 gy-4 mx-auto">
     <?php while($row = $result->fetch_assoc()): ?>
       <div class="col me-0">
         <div class="card rounded-2" style="width: 100%; height: 400px; background-color: white;">
@@ -149,7 +111,7 @@ $result = $conn->query($sql);
         </div>
       </div>
     </footer>
-    </div>
+    
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
