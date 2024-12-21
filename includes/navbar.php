@@ -16,7 +16,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
         <a class="btn" href="pagina_utilizador.php">
           <img src="imgs/icons/iconperson.svg" alt="">
         </a>
-        <a class="btn" href="#">
+        <a class="btn" href="carrinho.php">
           <img src="imgs/icons/cart.svg" alt="">
         </a>
         <a class="btn" href="add_produto.php">

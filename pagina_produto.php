@@ -10,7 +10,7 @@ include 'includes/db.php';
 if (isset($_GET['id'])) {
     $productId = $_GET['id'];
 
-    // Fetch product details
+    // Busca os detalhes do produto
     $sql = "SELECT p.*, u.username,u.id,u.imagem, pi.image_path 
             FROM produto p 
             JOIN users u ON p.user_id = u.id
@@ -22,14 +22,14 @@ if (isset($_GET['id'])) {
     $result = $stmt->get_result();
     $product = $result->fetch_assoc();
 
-    // Fetch all images for the product
+    // Procura todas as imagens do produto
     $images_query = $conn->prepare("SELECT image_path FROM produto_imagens WHERE produto_id = ?");
     $images_query->bind_param("i", $productId);
     $images_query->execute();
     $images_result = $images_query->get_result();
 
     if (!$product) {
-        echo "Produto não encontrado";
+      header("Location: logica/error.php");
         exit;
     }
 
@@ -42,17 +42,17 @@ if (isset($_GET['id'])) {
     $maior_valor = $bid_data['maior_valor'] ?? 0; // Default é 0 se não houver bids
 
     $bid_history_query = $conn->prepare("
-    SELECT b.valor, b.timestamp, u.username 
+    SELECT b.valor, b.licitado_a, u.username 
     FROM bids b
     JOIN users u ON b.user_id = u.id
     WHERE b.produto_id = ?
-    ORDER BY b.timestamp DESC
+    ORDER BY b.licitado_a DESC
     ");
     $bid_history_query->bind_param("i", $productId);
     $bid_history_query->execute();
     $bid_history_result = $bid_history_query->get_result();
 
-    // Handle à submissão
+    // Handle à submissão da bid
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['bid']) && $isLoggedIn) {
         $valor = floatval($_POST['bid']);
         $userId = $_SESSION['user_id'];
@@ -72,7 +72,7 @@ if (isset($_GET['id'])) {
         }
     }
 } else {
-    echo "Sem ID do produto";
+  header("Location: logica/error.php");
     exit;
 }
 ?>
@@ -294,7 +294,7 @@ if (isset($_GET['id'])) {
             <p class="jomhuria-regular fs-3 mb-5" style="line-height: 1; color: #5E5E5E;">
                 <?php echo htmlspecialchars($bid['username']); ?>       
                 <?php 
-                    $timeElapsed = time() - strtotime($bid['timestamp']); // Calculate elapsed time in seconds
+                    $timeElapsed = time() - strtotime($bid['licitado_a']); // Calculate elapsed time in seconds
                     if ($timeElapsed < 3600) { // Less than an hour
                         $minutesElapsed = floor($timeElapsed / 60);
                         echo "há {$minutesElapsed}m"; // Display in minutes
