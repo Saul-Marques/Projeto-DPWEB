@@ -1,5 +1,4 @@
 <?php 
-session_start();
 include 'db.php';
 $isLoggedIn = isset($_SESSION['user_id']);
 

@@ -1,3 +1,36 @@
+<?php
+session_start();
+include 'includes/db.php'; // Conexão à base de dados
+
+// Verifica se o usuário está logado
+$isLoggedIn = isset($_SESSION['user_id']);
+$userId = $_SESSION['user_id'] ?? null;
+
+if ($isLoggedIn) {
+    // Consulta para obter os produtos no carrinho do usuário
+    $sql = "SELECT c.*, p.titulo, p.preco, pi.image_path 
+            FROM carrinho c 
+            JOIN produto p ON c.produto_id = p.id 
+            LEFT JOIN produto_imagens pi ON p.id = pi.produto_id 
+            WHERE c.user_id = ?";
+
+    // Prepara e executa a consulta
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+
+
+    // Fecha a declaração
+    $stmt->close();
+} else {
+    echo '<p>Por favor, faça login para ver o seu carrinho.</p>';
+}
+
+// Fecha a conexão
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +53,7 @@
     <div class="col-2 d-none d-lg-block">
 
     </div>
-    <!--Coluna dos totais -->
+    <!--Coluna dos produtos -->
     <div class="col">
 
 

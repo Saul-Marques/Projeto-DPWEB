@@ -52,6 +52,39 @@ if (isset($_GET['id'])) {
     $bid_history_query->execute();
     $bid_history_result = $bid_history_query->get_result();
 
+   // Lógica para adicionar produto à tabela carrinho
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_carrinho']) && $isLoggedIn) {
+  $userId = $_SESSION['user_id'];
+
+  // Verificar se o produto existe
+  $checkProductQuery = $conn->prepare("SELECT id FROM produto WHERE id = ?");
+  $checkProductQuery->bind_param("i", $productId);
+  $checkProductQuery->execute();
+  $checkProductResult = $checkProductQuery->get_result();
+
+  if ($checkProductResult->num_rows > 0) {
+      // O produto existe, agora podemos adicionar ao carrinho
+      $stmt = $conn->prepare("INSERT INTO carrinho (user_id, produto_id) VALUES (?, ?)");
+      $stmt->bind_param("ii", $userId, $productId);
+
+      try {
+          if ($stmt->execute()) {
+              echo "<script>alert('Produto adicionado ao carrinho com sucesso!');</script>";
+          } else {
+              echo "<script>alert('Erro ao adicionar o produto ao carrinho.');</script>";
+          }
+      } catch (mysqli_sql_exception $e) {
+          echo "<script>alert('Erro ao adicionar o produto ao carrinho: " . $e->getMessage() . "');</script>";
+      }
+
+      $stmt->close();
+  } else {
+      echo "<script>alert('Produto não encontrado.');</script>";
+  }
+
+  $checkProductQuery->close();
+}
+
     // Handle à submissão da bid
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['bid']) && $isLoggedIn) {
         $valor = floatval($_POST['bid']);
@@ -199,9 +232,13 @@ if (isset($_GET['id'])) {
           </button>
           </form>
 
-          <div class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
-            Comprar agora.
-          </div>
+          <form method="POST">
+          <p> <?php echo htmlspecialchars($productId) ?></p>
+            <input type="hidden" value="<?php echo htmlspecialchars($productId) ?>">
+            <button type="submit" name="add_carrinho" class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
+              Adicionar ao carrinho
+            </button>
+          </form>
         </div>
         
       </div>
@@ -270,9 +307,13 @@ if (isset($_GET['id'])) {
             Licitar.
           </button>
           </form>
-          <button class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
-            Comprar agora.
-          </button>
+          <form method="POST">
+            <input type="hidden" value="<?php echo htmlspecialchars($productId) ?>">
+            <p> <?php echo htmlspecialchars($productId) ?></p>
+            <button type="submit" name="add_carrinho" class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
+              Adicionar ao carrinho
+            </button>
+          </form>
         </div>
         
       </div>
