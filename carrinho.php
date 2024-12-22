@@ -55,6 +55,29 @@ $conn->close();
     </div>
     <!--Coluna dos produtos -->
     <div class="col">
+    
+    <div class="container mt-5">
+        <h2 class="jomhuria-regular fs-custom">Produtos no Carrinho</h2>
+        <div class="row">
+            <?php if ($isLoggedIn && $result->num_rows > 0): ?>
+                <?php while($row = $result->fetch_assoc()): ?>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['produto_id']); ?>" class="text-decoration-none">
+                                <img src="<?php echo htmlspecialchars($row['image_path']); ?>" class="card-img-top" alt="Product Image">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo htmlspecialchars($row['titulo']); ?></h5>
+                                    <p class="card-text"><?php echo htmlspecialchars($row['preco']); ?>€</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p>O seu carrinho está vazio.</p>
+            <?php endif; ?>
+        </div>
+    </div>
 
 
     </div>
