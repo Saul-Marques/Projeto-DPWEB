@@ -60,7 +60,7 @@ $result = $conn->query($sql);
 
   <!--Slogan-->
   <div class="container rounded text-center jomhuria-regular fs-custom" style="background-color: transparent;">
-    Cena&Tal – Comprar e vender, nunca foi tão natural!
+    Cena & Tal – Comprar e vender, nunca foi tão natural!
   </div>
   <!--Categorias-->
 
@@ -68,7 +68,7 @@ $result = $conn->query($sql);
   </div>
   <!--Começa o display das cards-->
   <div class="container-fluid mt-5 mb-5 ">
-    <div class=" container-fluid mt-5 mb-5 row row-cols-xxl-5 row-cols-xl-4 row-cols-md-3 row-cols-sm-2 row-cols-1 gy-4 mx-auto">
+    <div class=" container-fluid mt-5 mb-5 row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5 gy-4 mx-auto">
     <?php while($row = $result->fetch_assoc()): ?>
       <div class="col me-0">
         <div class="card rounded-2" style="width: 100%; height: 400px; background-color: white;">
