@@ -1,0 +1,8 @@
+#hiddenImage {
+    display: none; /* Inicialmente escondida */
+    position: fixed; /* Fixa a imagem no meio da tela */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centraliza a imagem */
+    z-index: 1000; /* Garante que a imagem fique acima de outros elementos */
+}
