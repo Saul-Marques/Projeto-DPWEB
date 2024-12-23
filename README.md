@@ -8,13 +8,13 @@
 - ⬜ **Agrupamento por categorias:** Organização dos produtos por categorias específicas (em desenvolvimento).  
 - ⬜ **Página de Administração:** Ferramentas para gerir os conteúdos da plataforma (planeado).  
 - ✅ **Login e registo de utilizadores:** Sistema de autenticação de utilizadores, com segurança e praticidade.  
-- ⬜ **Handling de erros com páginas dedicadas:** Mensagens claras e informativas para erros comuns (em progresso).  
+- ✅ **Handling de erros com páginas dedicadas:** Mensagens claras e informativas para erros comuns (em progresso).  
 
 ---
 
 ## ✨ Funcionalidades Extra  
-- ⬜ **Sistema de Leilões:** Funcionalidade que permitirá aos usuários fazer lances nos produtos (em progresso).  
-- ⬜ **Favoritos:** Permite adicionar produtos à lista de favoritos para visualização posterior.  
+- ✅ **Sistema de Leilões:** Funcionalidade que permitirá aos usuários fazer lances nos produtos (em progresso).  
+- ✅ **Carrinho:** Permite adicionar produtos à lista de favoritos para visualização posterior.  
 - ⬜ **Compra Imediata:** Opção de comprar produtos diretamente, sem necessidade de interações extras (em progresso).  
 - ⬜ **Simulação de Transações:** Simula o processo de transação para uma experiência mais realista.  
 - ⬜ **Chat (Descontinuado):** Sistema de chat que estava planeado para permitir comunicação entre compradores e vendedores (descontinuado).  
