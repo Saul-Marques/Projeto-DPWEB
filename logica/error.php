@@ -66,7 +66,10 @@ $isLoggedIn = isset($_SESSION['user_id']);
         <div class="d-flex" style="justify-content:center">
             <img src="../imgs/icons/cowboy.png" class="ms-5 mb-5" alt="">
         </div>
-            
+        
+        <a href=".." class="btn rounded-4 border-0 jomhuria-regular fs-1" style="background-color: #000000; color: white; line-height:1">
+            Voltar à página inicial.
+        </a>
         
     </div>
 

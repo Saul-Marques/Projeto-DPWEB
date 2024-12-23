@@ -233,7 +233,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_carrinho']) && $is
           </form>
 
           <form method="POST">
-          <p> <?php echo htmlspecialchars($productId) ?></p>
             <input type="hidden" value="<?php echo htmlspecialchars($productId) ?>">
             <button type="submit" name="add_carrinho" class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
               Adicionar ao carrinho
@@ -309,7 +308,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_carrinho']) && $is
           </form>
           <form method="POST">
             <input type="hidden" value="<?php echo htmlspecialchars($productId) ?>">
-            <p> <?php echo htmlspecialchars($productId) ?></p>
             <button type="submit" name="add_carrinho" class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
               Adicionar ao carrinho
             </button>
