@@ -27,19 +27,11 @@ include 'includes/db.php';
       
       <form action="logica_add_produto.php" method="POST" enctype="multipart/form-data">
       <div class="container" style="background-color: white;">
-        <h3 class="jomhuria-regular fs-1 ms-3 mt-5">Categoria</h3>
-        <div class="dropdown">
-            <select class="btn dropdown-toggle jomhuria-regular fs-2 fw-lighter ms-3" name="categoria" style="color: #5A5A5A; background-color: #D9D9D9;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <option class="jomhuria-regular fs-2" value="placeholder">placeholder</option>
-                <option class="jomhuria-regular fs-2" value="placeholder">placeholder</option>
-                <option class="jomhuria-regular fs-2" value="placeholder">placeholder</option>
-            </select>   
-        </div>
 
         <br>
         <div class="row row-cols">
         <div class="col mb-5">
-        <h3 class="jomhuria-regular fs-1 ms-3 mt-5">Título</h3>
+        <h3 class="jomhuria-regular fs-1 ms-3">Título</h3>
             <div class="container-fluid ms-0 p-0" >
                 <div class="input-group ms-3">
                 <input type="text" name="titulo" class="form-control rounded border-0 jomhuria-regular mt-3 fs-3 align-self-center" style="background-color: #D9D9D9;" placeholder="Titulo" aria-label="Titulo" required>
@@ -47,7 +39,7 @@ include 'includes/db.php';
             </div>
         </div>
         <div class="col mb-5">
-            <h3 class="jomhuria-regular fs-1 ms-4 mt-5">Preço</h3>
+            <h3 class="jomhuria-regular fs-1 ms-4">Preço</h3>
             <p class="jomhuria-regular fs-4 ms-4" style="line-height:0; color:grey">Max : 99999€</p>
             <div class="container">
                 <div class="input-group ms-3">

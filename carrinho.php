@@ -164,7 +164,7 @@ $conn->close();
                 </div>
             </div>
             <!-- Coluna do total -->
-            <div class="col-12 col-lg-4 mt-3 rounded-3" style="background-color:white; height:300px">
+            <div class="col-12 col-lg-4 mt-3 rounded-3" style="background-color:white; height:300px; margin-bottom:200px">
                 <h2 class="jomhuria-regular fs-custom">Total.</h2>
                 <div>
                     <p class="jomhuria-regular fs-1" style="line-height:1">Total: <?php echo htmlspecialchars(number_format($total, 2, ',', '.')); ?>€</p>

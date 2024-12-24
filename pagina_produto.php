@@ -186,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_carrinho']) && $is
           <div class="input-group">
             <input type="text" class="form-control rounded-4 border-1 jomhuria-regular fs-3 align-self-center me-5" id="bid" min="<?php echo $maior_valor + 0.01; ?>" style="background-color: #BBBBBB; line-height: 0; border-color: black;" placeholder="Valor a licitar" name="bid">
           </div>
-          <button type="submit" class="btn rounded-4 border-1 jomhuria-regular fs-1 align-self-center me-5 mt-3" style="background-color: #000000; border-color: black; width: 100%; line-height: 1;color: white;">
+          <button type="submit" name="add_carrinho" class="btn rounded-4 border-1 jomhuria-regular fs-1 align-self-center me-5 mt-3" style="background-color: #000000; border-color: black; width: 100%; line-height: 1;color: white;">
             Licitar
           </button>
           </form>
@@ -224,9 +224,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_carrinho']) && $is
             
                 <p class="jomhuria-regular fs-custom ms-3 mb-0 g-0">
                     <?php echo htmlspecialchars($product['titulo']); ?>
-                    <a href="">
-                      <img src="imgs/icons/bookmark.svg" style="width: 28px; height: 28px;" alt="">
-                    </a>
                 </p>
                 <p class="jomhuria-regular ms-3 fs-1 mt-0" style="color: #D9D9D9;">
                     Descrição: 
