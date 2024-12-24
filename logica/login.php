@@ -16,10 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header('Location: ../index.php');
             exit();
         } else {
-            echo "Invalid password.";
+            header('Location: errorlogin.php');
         }
-    } else {
-        echo "User not found.";
     }
 
     $conn->close();

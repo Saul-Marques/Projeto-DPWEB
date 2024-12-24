@@ -1,8 +1,5 @@
 <?php
 session_start();
-//apagar os erros depois de acabar
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 $isLoggedIn = isset($_SESSION['user_id']);
 include 'includes/db.php';

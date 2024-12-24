@@ -134,8 +134,18 @@ $conn->close();
                                         $bid_result = $bid_stmt->get_result();
                                         $bid_data = $bid_result->fetch_assoc();
                                         $maior_valor = $bid_data['maior_valor'] ?? 0; // Default é 0 se não houver bids
+
+                                        // Consulta para obter a licitação do usuário
+                                        $user_bid_sql = "SELECT valor FROM bids WHERE produto_id = ? AND user_id = ?";
+                                        $user_bid_stmt = $conn->prepare($user_bid_sql);
+                                        $user_bid_stmt->bind_param("ii", $productId, $userId);
+                                        $user_bid_stmt->execute();
+                                        $user_bid_result = $user_bid_stmt->get_result();
+                                        $user_bid_data = $user_bid_result->fetch_assoc();
+                                        $user_bid_value = $user_bid_data['valor'] ?? 0; // Default é 0 se não houver licitação do usuário
                                     ?>
                                     <p class="jomhuria-regular fs-2" style="line-height:1">Licitação atual: <?php echo htmlspecialchars($maior_valor); ?>€</p>
+                                    <p class="jomhuria-regular fs-2" style="line-height:1">Sua licitação: <?php echo htmlspecialchars($user_bid_value); ?>€</p>
                                     <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['produto_id']); ?>" class="btn rounded-4 border-0 jomhuria-regular fs-1" style="background-color: #000000; color: white; line-height:1">
                                         Alterar Licitação.
                                     </a>

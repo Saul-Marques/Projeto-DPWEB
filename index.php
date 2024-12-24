@@ -1,9 +1,5 @@
 <?php
 session_start();
-//apagar este display de erros depois de acabar o desenvolvimento
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 $isLoggedIn = isset($_SESSION['user_id']);
 include 'includes/db.php'; // Conexão à base de dados
 
