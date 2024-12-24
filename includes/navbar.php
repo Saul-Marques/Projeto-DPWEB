@@ -38,7 +38,6 @@ $isLoggedIn = isset($_SESSION['user_id']);
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="contactos.php">Contactos</a></li>
           <li><a class="dropdown-item" href="faqs.php">FAQs</a></li>
-          <li><a class="dropdown-item" href="#">Mais alguma cena aqui</a></li>
         </ul>
       </div>
     </div>

@@ -61,13 +61,13 @@ $isLoggedIn = isset($_SESSION['user_id']);
     <div class="container d-flex align-items-center justify-content-center" style="margin-top: 200px">
         <div class="row align-items-center text-center text-lg-start">
             <div class="col-12 col-lg-6 mb-4 mb-lg-0">
-                <img src="../imgs/Frame 3.svg" class="img-fluid" style="max-width: 100%; height: auto;">
+                <img src="../imgs/chillguy.png" class="img-fluid" style="max-width: 100%; height: auto;">
             </div>
 
             <div class="col-12 col-lg-6">
                 <h1 class="jomhuria-regular fs-custom" style="color: black">Uh, Ohh...</h1>
-                <p class="fs-custom jomhuria-regular">Parece que a password ou o login está errado...</p>
-                <a href="../login.html" class="btn rounded-4 border-0 jomhuria-regular fs-1 mt-5" style="background-color: #000000; color: white; line-height:1">
+                <p class="fs-custom jomhuria-regular">Parece que o preço é demasiado alto...</p>
+                <a href="../add_produto.php" class="btn rounded-4 border-0 jomhuria-regular fs-1 mt-5" style="background-color: #000000; color: white; line-height:1">
                     Voltar atrás.
                 </a>
             </div>

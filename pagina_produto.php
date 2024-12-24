@@ -157,7 +157,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_carrinho']) && $is
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="contactos.html">Contactos</a></li>
             <li><a class="dropdown-item" href="faqs.html">FAQs</a></li>
-            <li><a class="dropdown-item" href="#">Mais alguma cena aqui</a></li>
           </ul>
         </div>
       </div>

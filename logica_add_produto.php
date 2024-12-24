@@ -1,15 +1,13 @@
 <?php
-include '../includes/db.php';
-
-
+include 'includes/db.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    header('Location: ../login.html');
+    header('Location: login.html');
     exit();
 }
 
-if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($_POST['preco'] < 9999)) {
+if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($_POST['preco'] < 99999)) {
     $user_id = $_SESSION['user_id'];
     $titulo = $_POST['titulo'];
     $descricao = $_POST['descricao'];
@@ -19,7 +17,6 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($_POST['preco'] < 9999)) {
     $sql = "INSERT INTO produto (user_id, titulo, descricao, preco) VALUES ('$user_id', '$titulo', '$descricao', '$preco')";
     if ($conn->query($sql) === TRUE) {
         $produto_id = $conn->insert_id; 
-
         // Criar uma pasta para cada produto baseado no produto_id
         $target_dir = "imgs/produtos/" . $produto_id . "/";
         if (!file_exists($target_dir)) {
@@ -54,12 +51,12 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($_POST['preco'] < 9999)) {
         }
 
         echo "Produto adicionado com sucesso!";
-        header('Location: ../index.php');
+        header('Location: index.php');
     } else {
         echo "Erro: " . $sql . "<br>" . $conn->error;
     }
 
     $conn->close();
 } else {
-    header("Location: ../add_produto.html");
+    header("Location: logica/errorpreco.php");
 }

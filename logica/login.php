@@ -18,6 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             header('Location: errorlogin.php');
         }
+    } else {
+        header('Location: errorlogin.php');
     }
 
     $conn->close();
