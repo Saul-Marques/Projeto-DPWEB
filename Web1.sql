@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 24-Dez-2024 às 14:49
+-- Tempo de geração: 24-Dez-2024 às 20:36
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -53,7 +53,8 @@ INSERT INTO `bids` (`id`, `produto_id`, `user_id`, `valor`, `licitado_a`, `times
 (10, 33, 1, 11, '2024-12-02 17:25:44', '2024-12-02 17:25:44'),
 (11, 33, 1, 50, '2024-12-13 16:36:29', '2024-12-13 16:36:29'),
 (12, 33, 1, 75, '2024-12-13 16:38:26', '2024-12-13 16:38:26'),
-(13, 33, 1, 76, '2024-12-13 17:12:38', '2024-12-13 17:12:38');
+(13, 33, 1, 76, '2024-12-13 17:12:38', '2024-12-13 17:12:38'),
+(14, 36, 17, 800, '2024-12-24 18:41:43', '2024-12-24 18:41:43');
 
 -- --------------------------------------------------------
 
@@ -204,7 +205,9 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `imagem`, `localidad
 (12, 'Pedro Moreira', '$2y$10$WZwyCsedl5.gl/tdgSE2memc3VHiuEPCmFqvV58hWpo9FpJ4qaMIC', 'pedromoreira@gay.com', 'imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-11-12'),
 (13, 'Pedro Santos', '$2y$10$2i1vZ85FK8p91s7yXYcCJezUPjvGPB6XbaUS1wVN38w.q7Un2eHZ6', 'aleijado@gmail.com', 'imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-11-25'),
 (14, 'teste1', '$2y$10$xyF4OP6g2FJEd2EFPFohkuOZjftzvS8vRT0cYm0eI1FxuRkl4vOi6', 'teste1@gmail.com', 'imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-12-02'),
-(15, 'teste1', '$2y$10$9Ec/X8ULfnEJmNl1oB8zbeGlmygV7YYmqOntpxs9Oq4QoGF1lVn0e', 'teste1@gmail.com', 'imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-12-02');
+(15, 'teste1', '$2y$10$9Ec/X8ULfnEJmNl1oB8zbeGlmygV7YYmqOntpxs9Oq4QoGF1lVn0e', 'teste1@gmail.com', 'imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-12-02'),
+(16, 'teste', '$2y$10$.ZbTboGr.8MALwGWCEBIXOzCNgv1H.fUN2ly2j5WtzpC5VjL5PCye', 'saul@mail', 'imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-12-24'),
+(17, 'Saul', '$2y$10$p1I06dBGlVqSQSqAMxdn2.g2Nlx33oPefmIfMOcLITt6vOg3S7zo2', 'saul@mail.com', 'imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-12-24');
 
 --
 -- Índices para tabelas despejadas
@@ -260,7 +263,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `bids`
 --
 ALTER TABLE `bids`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `carrinho`
@@ -290,7 +293,7 @@ ALTER TABLE `produto_imagens`
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Restrições para despejos de tabelas
