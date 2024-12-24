@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 22, 2024 at 11:50 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Tempo de geração: 24-Dez-2024 às 14:49
+-- Versão do servidor: 10.4.32-MariaDB
+-- versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `web1`
+-- Banco de dados: `web1`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bids`
+-- Estrutura da tabela `bids`
 --
 
 CREATE TABLE `bids` (
@@ -37,7 +37,7 @@ CREATE TABLE `bids` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `bids`
+-- Extraindo dados da tabela `bids`
 --
 
 INSERT INTO `bids` (`id`, `produto_id`, `user_id`, `valor`, `licitado_a`, `timestamp`) VALUES
@@ -58,7 +58,7 @@ INSERT INTO `bids` (`id`, `produto_id`, `user_id`, `valor`, `licitado_a`, `times
 -- --------------------------------------------------------
 
 --
--- Table structure for table `carrinho`
+-- Estrutura da tabela `carrinho`
 --
 
 CREATE TABLE `carrinho` (
@@ -68,18 +68,17 @@ CREATE TABLE `carrinho` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `carrinho`
+-- Extraindo dados da tabela `carrinho`
 --
 
 INSERT INTO `carrinho` (`id`, `user_id`, `produto_id`) VALUES
-(6, 1, 33),
 (7, 1, 37),
 (8, 1, 35);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `feedback`
+-- Estrutura da tabela `feedback`
 --
 
 CREATE TABLE `feedback` (
@@ -91,7 +90,7 @@ CREATE TABLE `feedback` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `feedback`
+-- Extraindo dados da tabela `feedback`
 --
 
 INSERT INTO `feedback` (`id`, `nome`, `email`, `mensagem`, `enviado_a`) VALUES
@@ -104,7 +103,7 @@ INSERT INTO `feedback` (`id`, `nome`, `email`, `mensagem`, `enviado_a`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `produto`
+-- Estrutura da tabela `produto`
 --
 
 CREATE TABLE `produto` (
@@ -119,7 +118,7 @@ CREATE TABLE `produto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 
 --
--- Dumping data for table `produto`
+-- Extraindo dados da tabela `produto`
 --
 
 INSERT INTO `produto` (`id`, `user_id`, `titulo`, `descricao`, `preco`, `imagem`, `adicionado_a`, `visivel`) VALUES
@@ -132,12 +131,13 @@ INSERT INTO `produto` (`id`, `user_id`, `titulo`, `descricao`, `preco`, `imagem`
 (38, 1, 'Teste data', 'Teste para ver', 85.56, NULL, '2024-12-01', 1),
 (39, 1, 'teste preco 2', 'teste preco 2', 999, NULL, '2024-12-09', 1),
 (40, 1, 'Teste preco 2', 'teste', 75.45, 'imgs/40/colin-watts-EPcaJRJm7YA-unsplash.jpg', '2024-12-10', 1),
-(41, 1, 'teste pastas 2q', '454588', 78, 'imgs/produtos/41/colin-watts-EPcaJRJm7YA-unsplash.jpg', '2024-12-10', 1);
+(41, 1, 'teste pastas 2q', '454588', 78, 'imgs/produtos/41/colin-watts-EPcaJRJm7YA-unsplash.jpg', '2024-12-10', 1),
+(49, 1, 'Carro muito bom', 'Carro mesmo fixe, quem conduz é mesmo bacano', 10000, 'imgs/produtos/49/passat1.png', '2024-12-24', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `produto_imagens`
+-- Estrutura da tabela `produto_imagens`
 --
 
 CREATE TABLE `produto_imagens` (
@@ -147,7 +147,7 @@ CREATE TABLE `produto_imagens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 
 --
--- Dumping data for table `produto_imagens`
+-- Extraindo dados da tabela `produto_imagens`
 --
 
 INSERT INTO `produto_imagens` (`id`, `produto_id`, `image_path`) VALUES
@@ -166,12 +166,14 @@ INSERT INTO `produto_imagens` (`id`, `produto_id`, `image_path`) VALUES
 (36, 41, 'imgs/produtos/41/ivana-cajina-HDd-NQ_AMNQ-unsplash.jpg'),
 (37, 41, 'imgs/produtos/41/samuel-ferrara-dKJXkKCF2D8-unsplash.jpg'),
 (38, 41, 'imgs/produtos/41/sora-sagano-Dksk8szLRN0-unsplash.jpg'),
-(39, 41, 'imgs/produtos/41/wu-yi-viMzRtv316k-unsplash.jpg');
+(39, 41, 'imgs/produtos/41/wu-yi-viMzRtv316k-unsplash.jpg'),
+(54, 49, 'imgs/produtos/49/passat1.png'),
+(55, 49, 'imgs/produtos/49/passat2.png');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Estrutura da tabela `users`
 --
 
 CREATE TABLE `users` (
@@ -189,7 +191,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 
 --
--- Dumping data for table `users`
+-- Extraindo dados da tabela `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `imagem`, `localidade`, `cidade`, `cp`, `telemovel`, `biografia`, `data`) VALUES
@@ -205,11 +207,11 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `imagem`, `localidad
 (15, 'teste1', '$2y$10$9Ec/X8ULfnEJmNl1oB8zbeGlmygV7YYmqOntpxs9Oq4QoGF1lVn0e', 'teste1@gmail.com', 'imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-12-02');
 
 --
--- Indexes for dumped tables
+-- Índices para tabelas despejadas
 --
 
 --
--- Indexes for table `bids`
+-- Índices para tabela `bids`
 --
 ALTER TABLE `bids`
   ADD PRIMARY KEY (`id`),
@@ -217,7 +219,7 @@ ALTER TABLE `bids`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `carrinho`
+-- Índices para tabela `carrinho`
 --
 ALTER TABLE `carrinho`
   ADD PRIMARY KEY (`id`),
@@ -225,97 +227,97 @@ ALTER TABLE `carrinho`
   ADD KEY `fk_products` (`produto_id`);
 
 --
--- Indexes for table `feedback`
+-- Índices para tabela `feedback`
 --
 ALTER TABLE `feedback`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `produto`
+-- Índices para tabela `produto`
 --
 ALTER TABLE `produto`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_user` (`user_id`);
 
 --
--- Indexes for table `produto_imagens`
+-- Índices para tabela `produto_imagens`
 --
 ALTER TABLE `produto_imagens`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_produto` (`produto_id`);
 
 --
--- Indexes for table `users`
+-- Índices para tabela `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT for table `bids`
+-- AUTO_INCREMENT de tabela `bids`
 --
 ALTER TABLE `bids`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `carrinho`
+-- AUTO_INCREMENT de tabela `carrinho`
 --
 ALTER TABLE `carrinho`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `feedback`
+-- AUTO_INCREMENT de tabela `feedback`
 --
 ALTER TABLE `feedback`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `produto`
+-- AUTO_INCREMENT de tabela `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
--- AUTO_INCREMENT for table `produto_imagens`
+-- AUTO_INCREMENT de tabela `produto_imagens`
 --
 ALTER TABLE `produto_imagens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- Constraints for dumped tables
+-- Restrições para despejos de tabelas
 --
 
 --
--- Constraints for table `bids`
+-- Limitadores para a tabela `bids`
 --
 ALTER TABLE `bids`
   ADD CONSTRAINT `bids_ibfk_1` FOREIGN KEY (`produto_id`) REFERENCES `produto` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `bids_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `carrinho`
+-- Limitadores para a tabela `carrinho`
 --
 ALTER TABLE `carrinho`
   ADD CONSTRAINT `fk_products` FOREIGN KEY (`produto_id`) REFERENCES `produto` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `produto`
+-- Limitadores para a tabela `produto`
 --
 ALTER TABLE `produto`
   ADD CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `produto_imagens`
+-- Limitadores para a tabela `produto_imagens`
 --
 ALTER TABLE `produto_imagens`
   ADD CONSTRAINT `fk_produto` FOREIGN KEY (`produto_id`) REFERENCES `produto` (`id`) ON DELETE CASCADE;
