@@ -16,8 +16,7 @@ if (isset($_POST['remove_item'])) {
     $remove_stmt->close();
 }
 
-// Inicializa a variável total
-// Inicializa a variável total das licitações
+// Inicializa as variáveis
 $total = 0;
 $totalBids = 0;
 
@@ -34,38 +33,67 @@ $stmt->bind_param("i", $userId);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Loop para calcular o total e as licitações
-while($row = $result->fetch_assoc()) {
+// Array para armazenar os IDs dos produtos no carrinho
+$productIds = [];
+
+// Loop para coletar os IDs dos produtos no carrinho e calcular o total
+while ($row = $result->fetch_assoc()) {
     $total += $row['preco']; // Adiciona o preço do produto ao total
-
-    // Consulta para obter a maior bid do produto
-    $productId = $row['produto_id'];
-    $bid_sql = "SELECT MAX(valor) AS maior_valor FROM bids WHERE produto_id = ?";
-    $bid_stmt = $conn->prepare($bid_sql);
-    $bid_stmt->bind_param("i", $productId);
-    $bid_stmt->execute();
-    $bid_result = $bid_stmt->get_result();
-    $bid_data = $bid_result->fetch_assoc();
-    $maior_valor = $bid_data['maior_valor'] ?? 0; // Default é 0 se não houver bids
-
-    // Adiciona a maior licitação ao total das licitações
-    $totalBids += $maior_valor;
-
-    // Fecha a declaração da consulta de bids
-    $bid_stmt->close();
+    $productIds[] = $row['produto_id']; // Armazena o ID do produto
 }
 
 // Fecha a declaração
 $stmt->close();
 
+// Se houver produtos no carrinho, calcula o total das licitações
+if (!empty($productIds)) {
+    // Converte os IDs dos produtos em uma string separada por vírgulas
+    $productIdsString = implode(",", $productIds);
+
+    // Consulta para obter a maior bid de todos os produtos no carrinho
+    $bid_sql = "SELECT SUM(maior_valor) AS total_bids 
+                FROM (SELECT MAX(valor) AS maior_valor 
+                      FROM bids 
+                      WHERE produto_id IN ($productIdsString) 
+                      GROUP BY produto_id) AS bids_table";
+    $bid_stmt = $conn->prepare($bid_sql);
+    $bid_stmt->execute();
+    $bid_result = $bid_stmt->get_result();
+    $bid_data = $bid_result->fetch_assoc();
+    $totalBids = $bid_data['total_bids'] ?? 0; // Default é 0 se não houver bids
+
+    // Fecha a declaração da consulta de bids
+    $bid_stmt->close();
+}
+
+// Se houver produtos no carrinho, calcula o total das licitações
+if (!empty($productIds)) {
+    // Converte os IDs dos produtos em uma string separada por vírgulas
+    $productIdsString = implode(",", $productIds);
+
+    // Consulta para obter a maior bid de todos os produtos no carrinho
+    $bid_sql = "SELECT SUM(maior_valor) AS total_bids 
+                FROM (SELECT MAX(valor) AS maior_valor 
+                      FROM bids 
+                      WHERE produto_id IN ($productIdsString) 
+                      GROUP BY produto_id) AS bids_table";
+    $bid_stmt = $conn->prepare($bid_sql);
+    $bid_stmt->execute();
+    $bid_result = $bid_stmt->get_result();
+    $bid_data = $bid_result->fetch_assoc();
+    $totalBids = $bid_data['total_bids'] ?? 0; // Default é 0 se não houver bids
+
+    // Fecha a declaração da consulta de bids
+    $bid_stmt->close();
+}
+
 
 if ($isLoggedIn) {
-    // Consulta para obter os produtos no carrinho do usuário
-    $sql = "SELECT c.*, p.titulo, p.preco, pi.image_path 
-            FROM carrinho c 
-            JOIN produto p ON c.produto_id = p.id 
-            LEFT JOIN produto_imagens pi ON p.id = pi.produto_id 
-            WHERE c.user_id = ?";
+    // Consulta para obter os produtos no carrinho do utilizador
+    $sql = "SELECT c.*, p.titulo, p.preco, (SELECT pi.image_path FROM produto_imagens pi WHERE pi.produto_id = p.id LIMIT 1) AS image_path
+        FROM carrinho c 
+        JOIN produto p ON c.produto_id = p.id 
+        WHERE c.user_id = ?";
 
     // Prepara e executa a consulta
     $stmt = $conn->prepare($sql);
@@ -135,18 +163,18 @@ $conn->close();
                                         $bid_data = $bid_result->fetch_assoc();
                                         $maior_valor = $bid_data['maior_valor'] ?? 0; // Default é 0 se não houver bids
 
-                                        // Consulta para obter a licitação do usuário
+                                        // Consulta para obter a licitação do utilizador
                                         $user_bid_sql = "SELECT valor FROM bids WHERE produto_id = ? AND user_id = ?";
                                         $user_bid_stmt = $conn->prepare($user_bid_sql);
                                         $user_bid_stmt->bind_param("ii", $productId, $userId);
                                         $user_bid_stmt->execute();
                                         $user_bid_result = $user_bid_stmt->get_result();
                                         $user_bid_data = $user_bid_result->fetch_assoc();
-                                        $user_bid_value = $user_bid_data['valor'] ?? 0; // Default é 0 se não houver licitação do usuário
+                                        $user_bid_value = $user_bid_data['valor'] ?? 0; // Default é 0 se não houver licitação do utilizador
                                     ?>
                                     <p class="jomhuria-regular fs-2" style="line-height:1">Licitação atual: <?php echo htmlspecialchars($maior_valor); ?>€</p>
                                     <p class="jomhuria-regular fs-2" style="line-height:1">Sua licitação: <?php echo htmlspecialchars($user_bid_value); ?>€</p>
-                                    <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['produto_id']); ?>" class="btn rounded-4 border-0 jomhuria-regular fs-1" style="background-color: #000000; color: white; line-height:1">
+                                    <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['produto_id']); ?>" class="btn rounded-4 border-0 jomhuria-regular fs-1 mb-2" style="background-color: #000000; color: white; line-height:1">
                                         Alterar Licitação.
                                     </a>
                                     <form method="POST" class="d-inline">

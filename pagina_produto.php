@@ -190,13 +190,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_carrinho']) && $is
             Licitar
           </button>
           </form>
-
-          <form method="POST">
-            <input type="hidden" value="<?php echo htmlspecialchars($productId) ?>">
-            <button type="submit" name="add_carrinho" class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
-              Adicionar ao carrinho
-            </button>
-          </form>
+          <?php if ($isLoggedIn && $_SESSION['user_id'] != $product['user_id']): ?>
+            <form method="POST">
+                <input type="hidden" value="<?php echo htmlspecialchars($productId) ?>">
+                <button type="submit" name="add_carrinho" class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
+                    Adicionar ao carrinho
+                </button>
+            </form>
+          <?php endif; ?>
         </div>
         
       </div>
@@ -262,12 +263,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_carrinho']) && $is
             Licitar.
           </button>
           </form>
-          <form method="POST">
-            <input type="hidden" value="<?php echo htmlspecialchars($productId) ?>">
-            <button type="submit" name="add_carrinho" class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
-              Adicionar ao carrinho
-            </button>
-          </form>
+          <?php if ($isLoggedIn && $_SESSION['user_id'] != $product['user_id']): ?>
+            <form method="POST">
+                <input type="hidden" value="<?php echo htmlspecialchars($productId) ?>">
+                <button type="submit" name="add_carrinho" class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
+                    Adicionar ao carrinho
+                </button>
+            </form>
+          <?php endif; ?>
         </div>
         
       </div>

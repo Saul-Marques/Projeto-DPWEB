@@ -26,11 +26,11 @@ if (isset($_GET['user_id'])) {
     if ($result->num_rows > 0) {
         $userData = $result->fetch_assoc();
     } else {
-        echo "<p>User not found.</p>";
+        header("Location: logica/error.php");
         exit;
     }
 } else {
-    echo "<p>Invalid user ID.</p>";
+    header("Location: logica/error.php");
     exit;
 }
 ?>

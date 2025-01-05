@@ -22,7 +22,7 @@ $result = $query->get_result();
 if ($result->num_rows > 0) {
     $userData = $result->fetch_assoc();
 } else {
-    echo "User not found.";
+    header("Location: logica/error.php");
     exit;
 }
 
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $userData['telemovel'] = $telemovel;
         $userData['email'] = $email;
     } else {
-        echo "Failed to update profile.";
+        header("Location: logica/error.php");
     }
 }
 ?>
@@ -97,6 +97,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <img src="imgs/icons/account_circle.svg" style="height: 85px; width: 85px;" alt="">
                 </a>
                 <br>
+                <a href="pagina_utilizador_guest.php?user_id=<?php echo htmlspecialchars($_SESSION['user_id']); ?>" class="btn rounded-4 jomhuria-regular fs-3" style="background-color: black; color: white; line-height:0.75">
+                    Perfil Público
+                </a>
             </div>
             
         </div>
@@ -118,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         placeholder="Biografia" value="<?php echo htmlspecialchars($userData['biografia']); ?>" name="biografia">
                 </div>
                 <div class="input-group mt-4 mb-4">
-                    <input type="text"  class="form-control rounded-4 jomhuria-regular fs-3 align-self-center me-5" style="background-color: #d9d9d9; line-height: 0;"  
+                    <input type="email"  class="form-control rounded-4 jomhuria-regular fs-3 align-self-center me-5" style="background-color: #d9d9d9; line-height: 0;"  
                         placeholder="email" value="<?php echo htmlspecialchars($userData['email']); ?>" name="email">
                 </div>
             </div>

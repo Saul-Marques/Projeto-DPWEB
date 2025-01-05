@@ -76,24 +76,7 @@ $result = $conn->query($sql);
 <h1 class="text-center mt-5 mb-5 jomhuria-regular fs-custom" style="color: rgba(150, 150, 150, 0.425);">Chegou ao fim...</h1>
 
 <!-- Footer -->
-<footer style="background-color: black; color: white;">
-    <div class="container">
-        <div class="row row-cols-2">
-            <!-- Coluna da esquerda -->
-            <div class="col">
-                <img src="imgs/logo.svg" class="mt-5 mb-5" alt="">
-            </div>
-            <div class="col">
-                <p class="mt-3" style="color: #c4c4c4;"> Informações</p>
-                <a class="btn" style="color: #ffffff;" href="contactos.php"> Contactos</a>
-                
-                <br>
-                <br>
-                <p> Desenvolvido por: Saúl Marques & Vicente Rosa</p>
-            </div>
-        </div>
-    </div>
-</footer>
+<?php include 'includes/footer.html' ?>
 
 <script src="js/bootstrap.bundle.min.js"></script>
 <script>
