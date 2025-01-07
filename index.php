@@ -10,6 +10,7 @@ $sql = "SELECT produto.*, produto_imagens.image_path, users.username
         FROM produto 
         LEFT JOIN produto_imagens ON produto.id = produto_imagens.produto_id 
         LEFT JOIN users ON produto.user_id = users.id 
+        WHERE produto.visivel = 1 
         GROUP BY produto.id 
         ORDER BY MIN(produto_imagens.id)";
 
@@ -36,7 +37,7 @@ $result = $conn->query($sql);
 
  <!--Imagem principal-->
  <div class="container-fluid p-0 rounded" style="background-color: transparent;">
-  <img class="object-fit-contain" src="imgs/cover2.png" style="object-fit: contain; width: 100%; height: 100%;" alt="">
+  <img class="object-fit-contain" src="imgs/cover2.png" style="width: 100%; height: 100%;" alt="">
     
 
 <!-- Barra de Pesquisa -->

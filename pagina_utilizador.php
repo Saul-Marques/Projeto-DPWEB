@@ -92,13 +92,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
 
             </div>
-            <div class="col mt-4">
+            <div class="col mt-4 text-center">
                 <a href="">
                     <img src="imgs/icons/account_circle.svg" style="height: 85px; width: 85px;" alt="">
                 </a>
                 <br>
                 <a href="pagina_utilizador_guest.php?user_id=<?php echo htmlspecialchars($_SESSION['user_id']); ?>" class="btn rounded-4 jomhuria-regular fs-3" style="background-color: black; color: white; line-height:0.75">
-                    Perfil Público
+                    Perfil Público e os seus anúncios.
                 </a>
             </div>
             

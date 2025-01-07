@@ -1,6 +1,8 @@
 <?php
 session_start();
 $isLoggedIn = isset($_SESSION['user_id']);
+$loggedInUserId = $isLoggedIn ? $_SESSION['user_id'] : null;
+
 include 'includes/db.php'; 
 
 if (isset($_GET['user_id'])) {
@@ -12,16 +14,16 @@ if (isset($_GET['user_id'])) {
     $query->bind_param("i", $userId);
     $query->execute();
     $result = $query->get_result();
+    
     $product_sql = "SELECT produto.*, produto_imagens.image_path, users.username 
-        FROM produto 
-        LEFT JOIN produto_imagens ON produto.id = produto_imagens.produto_id 
-        LEFT JOIN users ON produto.user_id = users.id 
-        WHERE produto.user_id = $userId
-        GROUP BY produto.id 
-        ORDER BY MIN(produto_imagens.id)";
+      FROM produto 
+      LEFT JOIN produto_imagens ON produto.id = produto_imagens.produto_id 
+      LEFT JOIN users ON produto.user_id = users.id 
+      WHERE produto.user_id = $userId
+      GROUP BY produto.id 
+      ORDER BY MIN(produto_imagens.id)";
 
-  $product_result = $conn->query($product_sql);
-
+    $product_result = $conn->query($product_sql);
 
     if ($result->num_rows > 0) {
         $userData = $result->fetch_assoc();
@@ -73,25 +75,39 @@ if (isset($_GET['user_id'])) {
 </div>
 
 
-<div class="container-fluid mt-5 mb-5 ">
-    <div class=" container-fluid mt-5 mb-5 row row-cols-xxl-5 row-cols-xl-4 row-cols-md-3 row-cols-1 gy-4 mx-auto">
-    <?php while($row = $product_result->fetch_assoc()): ?>
-      <div class="col me-0">
-        <div class="card rounded-2" style="width: 100%; height: 400px; background-color: white;">
-          <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['id']); ?>" class="text-decoration-none">
-            <div class="container p-0" style="width: 100%; height: 250px; background-color: white;">
-              <img src="<?php echo htmlspecialchars($row['image_path']); ?>" class="img-fluid" alt="Product Image" style="width: 100%; height: 100%; object-fit:cover;">
+<div class="container-fluid mt-5 mb-5">
+    <div class="container-fluid mt-5 mb-5 row row-cols-xxl-5 row-cols-xl-4 row-cols-md-3 row-cols-1 gy-4 mx-auto">
+        <?php while($row = $product_result->fetch_assoc()): ?>
+            <div class="col me-0">
+                <div class="card rounded-2" style="width: 100%; height: 400px; background-color: white;">
+                    <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['id']); ?>" class="text-decoration-none">
+                        <div class="container p-0" style="width: 100%; height: 250px; background-color: white;">
+                            <img src="<?php echo htmlspecialchars($row['image_path']); ?>" class="img-fluid" alt="Product Image" style="width: 100%; height: 100%; object-fit:cover;">
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['id']); ?>" class="text-decoration-none" style="color: #000000">
+                            <div class="card-title"><?php echo htmlspecialchars($row['titulo']); ?></div>
+                        </a>
+                        <div class="card-text"><h5 class="fw-bold"><?php echo htmlspecialchars($row['preco']); ?>€</h5></div>
+                        
+                        <!-- Botão dinamico que mostra a visibilidade -->
+                        <?php if ($isLoggedIn && $loggedInUserId == $userId): ?>
+                            <form action="logica/unlist_product.php" method="POST" style="display: inline;">
+                                <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($row['id']); ?>">
+                                <?php if ($row['visivel'] == 1): ?>
+                                    <!-- Produto é visivel: Mostra "Esconder" -->
+                                    <button type="submit" class="btn border-1 btn-sm" style="border-color: red">Esconder</button>
+                                <?php else: ?>
+                                    <!-- Produto não é visivel: Mostra "Mostrar de novo" -->
+                                    <button type="submit" class="btn border-1 btn-sm" style="border-color: green">Mostrar de novo</button>
+                                <?php endif; ?>
+                            </form>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
-          </a>
-          <div class="card-body">
-            <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['id']); ?>" class="text-decoration-none " style="color: #000000">
-              <div class="card-title"><?php echo htmlspecialchars($row['titulo']); ?></div>
-            </a>
-            <div class="card-text"><h5 class="fw-bold"><?php echo htmlspecialchars($row['preco']); ?>€</h5></div>
-          </div>
-        </div>
-      </div>
-      <?php endwhile; ?>
+        <?php endwhile; ?>
     </div>
 </div>
 
