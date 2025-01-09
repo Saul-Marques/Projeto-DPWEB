@@ -110,7 +110,7 @@ if ($isLoggedIn) {
 }
 
 // Fecha a conexão
-$conn->close();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -221,3 +221,7 @@ $conn->close();
 </script>
 </body>
 </html>
+
+<?php
+$conn->close();
+?>

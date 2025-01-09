@@ -16,10 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header('Location: ../index.php');
             exit();
         } else {
-            header('Location: errorlogin.php');
+            header('Location: ../errorlogin.php');
         }
     } else {
-        header('Location: errorlogin.php');
+        header('Location: ../errorlogin.php');
     }
 
     $conn->close();

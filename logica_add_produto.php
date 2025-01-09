@@ -58,5 +58,5 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($_POST['preco'] < 99999)) {
 
     $conn->close();
 } else {
-    header("Location: logica/errorpreco.php");
+    header("Location: error.php");
 }

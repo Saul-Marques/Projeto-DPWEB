@@ -28,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
             exit;
         } else {
             // Handle error
-            header("Location: error.php");
+            header("Location: ../error.php");
         }
     } else {
-        header("Location: error.php");
+        header("Location: ../error.php");
     }
 }
 ?>
