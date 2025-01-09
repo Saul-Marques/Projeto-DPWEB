@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               Email:
             </p>
             <div class="input-group" style="height: 48px;">
-              <input type="text" class="form-control rounded-3 border-1" style="background-color: #ECECEC; line-height: 0;font-family: Jost; border-color: black;" name="email">
+              <input type="email" class="form-control rounded-3 border-1" style="background-color: #ECECEC; line-height: 0;font-family: Jost; border-color: black;" name="email">
             </div>
           </div>
         </div>

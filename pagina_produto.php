@@ -311,5 +311,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_carrinho']) && $is
   </div>
   <?php include 'includes/footer.html' ?>
     <script src="js/bootstrap.bundle.min.js"></script>
+    <!-- Adicionar o check em js para atualizar o preço e as licitacoes ca em baixo 
+    Chamada assíncrona para atualizar o preço inserido 
+    -->
+  
 </body>
 </html>
