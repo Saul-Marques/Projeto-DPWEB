@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 24-Dez-2024 às 20:36
+-- Tempo de geração: 13-Jan-2025 às 16:57
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `web1`
+-- Banco de dados: `grupo102`
 --
 
 -- --------------------------------------------------------
@@ -54,7 +54,20 @@ INSERT INTO `bids` (`id`, `produto_id`, `user_id`, `valor`, `licitado_a`, `times
 (11, 33, 1, 50, '2024-12-13 16:36:29', '2024-12-13 16:36:29'),
 (12, 33, 1, 75, '2024-12-13 16:38:26', '2024-12-13 16:38:26'),
 (13, 33, 1, 76, '2024-12-13 17:12:38', '2024-12-13 17:12:38'),
-(14, 36, 17, 800, '2024-12-24 18:41:43', '2024-12-24 18:41:43');
+(14, 36, 17, 800, '2024-12-24 18:41:43', '2024-12-24 18:41:43'),
+(15, 35, 1, 255, '2025-01-09 17:42:54', '2025-01-09 17:42:54'),
+(16, 35, 1, 566, '2025-01-09 17:43:08', '2025-01-09 17:43:08'),
+(17, 35, 1, 800, '2025-01-09 17:48:18', '2025-01-09 17:48:18'),
+(18, 35, 1, 899, '2025-01-09 17:48:31', '2025-01-09 17:48:31'),
+(19, 33, 18, 80, '2025-01-09 18:25:52', '2025-01-09 18:25:52'),
+(20, 33, 1, 90, '2025-01-13 13:43:28', '2025-01-13 13:43:28'),
+(21, 33, 1, 100, '2025-01-13 13:46:36', '2025-01-13 13:46:36'),
+(22, 33, 1, 120, '2025-01-13 14:03:05', '2025-01-13 14:03:05'),
+(23, 33, 1, 130, '2025-01-13 14:03:34', '2025-01-13 14:03:34'),
+(24, 33, 1, 140, '2025-01-13 14:07:28', '2025-01-13 14:07:28'),
+(25, 35, 1, 1000, '2025-01-13 14:27:35', '2025-01-13 14:27:35'),
+(26, 38, 1, 6, '2025-01-13 14:30:55', '2025-01-13 14:30:55'),
+(27, 53, 1, 305, '2025-01-13 14:51:58', '2025-01-13 14:51:58');
 
 -- --------------------------------------------------------
 
@@ -67,14 +80,6 @@ CREATE TABLE `carrinho` (
   `user_id` int(11) NOT NULL,
   `produto_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Extraindo dados da tabela `carrinho`
---
-
-INSERT INTO `carrinho` (`id`, `user_id`, `produto_id`) VALUES
-(7, 1, 37),
-(8, 1, 35);
 
 -- --------------------------------------------------------
 
@@ -133,7 +138,11 @@ INSERT INTO `produto` (`id`, `user_id`, `titulo`, `descricao`, `preco`, `imagem`
 (39, 1, 'teste preco 2', 'teste preco 2', 999, NULL, '2024-12-09', 1),
 (40, 1, 'Teste preco 2', 'teste', 75.45, 'imgs/40/colin-watts-EPcaJRJm7YA-unsplash.jpg', '2024-12-10', 1),
 (41, 1, 'teste pastas 2q', '454588', 78, 'imgs/produtos/41/colin-watts-EPcaJRJm7YA-unsplash.jpg', '2024-12-10', 1),
-(49, 1, 'Carro muito bom', 'Carro mesmo fixe, quem conduz é mesmo bacano', 10000, 'imgs/produtos/49/passat1.png', '2024-12-24', 1);
+(49, 1, 'Carro muito bom', 'Carro mesmo fixe, quem conduz é mesmo bacano', 10000, 'imgs/produtos/49/passat1.png', '2024-12-24', 1),
+(50, 18, 'teste final', 'teste', 7555, '../imgs/produtos/50/Imagem WhatsApp 2024-06-28 às 11.03.49_9d0eed3a.jpg', '2025-01-09', 0),
+(51, 18, 'teste final 2', 'teste', 825, '../imgs/produtos/51/Imagem WhatsApp 2024-06-28 às 11.03.49_9d0eed3a.jpg', '2025-01-09', 0),
+(52, 18, 'teste final 3', 'test 3', 852, 'imgs/produtos/52/raf,360x360,075,t,fafafa_ca443f4786.jpg', '2025-01-09', 0),
+(53, 2, 'Backets Racing', 'último teste', 300, 'imgs/produtos/53/Captura de ecrã 2024-03-02 122008.png', '2025-01-13', 1);
 
 -- --------------------------------------------------------
 
@@ -169,7 +178,16 @@ INSERT INTO `produto_imagens` (`id`, `produto_id`, `image_path`) VALUES
 (38, 41, 'imgs/produtos/41/sora-sagano-Dksk8szLRN0-unsplash.jpg'),
 (39, 41, 'imgs/produtos/41/wu-yi-viMzRtv316k-unsplash.jpg'),
 (54, 49, 'imgs/produtos/49/passat1.png'),
-(55, 49, 'imgs/produtos/49/passat2.png');
+(55, 49, 'imgs/produtos/49/passat2.png'),
+(56, 50, '../imgs/produtos/50/Imagem WhatsApp 2024-06-28 às 11.03.49_9d0eed3a.jpg'),
+(57, 51, '../imgs/produtos/51/Imagem WhatsApp 2024-06-28 às 11.03.49_9d0eed3a.jpg'),
+(58, 52, 'imgs/produtos/52/raf,360x360,075,t,fafafa_ca443f4786.jpg'),
+(59, 53, 'imgs/produtos/53/Captura de ecrã 2024-03-02 122008.png'),
+(60, 53, 'imgs/produtos/53/Captura de ecrã 2024-03-02 122029.png'),
+(61, 53, 'imgs/produtos/53/Captura de ecrã 2024-03-02 122048.png'),
+(62, 53, 'imgs/produtos/53/Captura de ecrã 2024-03-02 122205.png'),
+(63, 53, 'imgs/produtos/53/Captura de ecrã 2024-03-08 141501.png'),
+(64, 53, 'imgs/produtos/53/Captura de ecrã 2024-03-08 141533.png');
 
 -- --------------------------------------------------------
 
@@ -207,7 +225,8 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `imagem`, `localidad
 (14, 'teste1', '$2y$10$xyF4OP6g2FJEd2EFPFohkuOZjftzvS8vRT0cYm0eI1FxuRkl4vOi6', 'teste1@gmail.com', 'imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-12-02'),
 (15, 'teste1', '$2y$10$9Ec/X8ULfnEJmNl1oB8zbeGlmygV7YYmqOntpxs9Oq4QoGF1lVn0e', 'teste1@gmail.com', 'imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-12-02'),
 (16, 'teste', '$2y$10$.ZbTboGr.8MALwGWCEBIXOzCNgv1H.fUN2ly2j5WtzpC5VjL5PCye', 'saul@mail', 'imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-12-24'),
-(17, 'Saul', '$2y$10$p1I06dBGlVqSQSqAMxdn2.g2Nlx33oPefmIfMOcLITt6vOg3S7zo2', 'saul@mail.com', 'imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2024-12-24');
+(17, 'Saul', '$2y$10$p1I06dBGlVqSQSqAMxdn2.g2Nlx33oPefmIfMOcLITt6vOg3S7zo2', 'saul@mail.com', 'imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, '', '2024-12-24'),
+(18, 'teste', '$2y$10$ux9vMs/rnMunAvOg4LnrMOjSSjZ.aUh0CcyD848RE0vTYFk/ioEkW', 'teste@mail.com', 'imgs/icons/account_circle.svg', NULL, NULL, NULL, NULL, NULL, '2025-01-09');
 
 --
 -- Índices para tabelas despejadas
@@ -263,13 +282,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `bids`
 --
 ALTER TABLE `bids`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de tabela `carrinho`
 --
 ALTER TABLE `carrinho`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de tabela `feedback`
@@ -281,19 +300,19 @@ ALTER TABLE `feedback`
 -- AUTO_INCREMENT de tabela `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT de tabela `produto_imagens`
 --
 ALTER TABLE `produto_imagens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Restrições para despejos de tabelas
