@@ -6,18 +6,23 @@ include 'includes/db.php'; // Conexão à base de dados
 $isLoggedIn = isset($_SESSION['user_id']);
 $userId = $_SESSION['user_id'] ?? null;
 
-// Consulta para obter as licitações que o usuário participa
-$sql = "SELECT b.*, p.titulo, p.preco, pi.image_path 
+// Consulta para obter as últimas licitações do usuário, sem repetir produtos
+$sql = "SELECT b.*, p.titulo, p.preco, MIN(pi.image_path) as image_path 
         FROM bids b 
         JOIN produto p ON b.produto_id = p.id 
         LEFT JOIN produto_imagens pi ON p.id = pi.produto_id 
-        WHERE b.user_id = ? 
-        GROUP BY b.produto_id 
+        WHERE (b.produto_id, b.licitado_a) IN (
+            SELECT produto_id, MAX(licitado_a) 
+            FROM bids 
+            WHERE user_id = ?
+            GROUP BY produto_id
+        ) 
+        AND b.user_id = ? 
+        GROUP BY b.produto_id, p.titulo, p.preco 
         ORDER BY b.licitado_a DESC";
-
 // Prepara e executa a consulta
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $userId);
+$stmt->bind_param("ii", $userId, $userId); // Passa o userId duas vezes
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -64,7 +69,7 @@ $conn->close();
                     // Reabre a conexão
                     include 'includes/db.php';
                     $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("i", $userId);
+                    $stmt->bind_param("ii", $userId, $userId); // Passa o userId duas vezes
                     $stmt->execute();
                     $result = $stmt->get_result();
 
