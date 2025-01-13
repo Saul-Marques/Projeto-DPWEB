@@ -6,26 +6,14 @@ include 'includes/db.php'; // Conexão à base de dados
 $isLoggedIn = isset($_SESSION['user_id']);
 $userId = $_SESSION['user_id'] ?? null;
 
-// Lógica para remover um item do carrinho
-if (isset($_POST['remove_item'])) {
-    $itemId = $_POST['item_id'];
-    $remove_sql = "DELETE FROM carrinho WHERE id = ? AND user_id = ?";
-    $remove_stmt = $conn->prepare($remove_sql);
-    $remove_stmt->bind_param("ii", $itemId, $userId);
-    $remove_stmt->execute();
-    $remove_stmt->close();
-}
-
-// Inicializa as variáveis
-$total = 0;
-$totalBids = 0;
-
-// Consulta para obter os produtos no carrinho do usuário
-$sql = "SELECT c.*, p.titulo, p.preco, pi.image_path 
-        FROM carrinho c 
-        JOIN produto p ON c.produto_id = p.id 
+// Consulta para obter as licitações que o usuário participa
+$sql = "SELECT b.*, p.titulo, p.preco, pi.image_path 
+        FROM bids b 
+        JOIN produto p ON b.produto_id = p.id 
         LEFT JOIN produto_imagens pi ON p.id = pi.produto_id 
-        WHERE c.user_id = ?";
+        WHERE b.user_id = ? 
+        GROUP BY b.produto_id 
+        ORDER BY b.licitado_a DESC";
 
 // Prepara e executa a consulta
 $stmt = $conn->prepare($sql);
@@ -33,84 +21,19 @@ $stmt->bind_param("i", $userId);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Array para armazenar os IDs dos produtos no carrinho
-$productIds = [];
+// Inicializa as variáveis
+$total = 0;
+$totalBids = 0;
 
-// Loop para coletar os IDs dos produtos no carrinho e calcular o total
+// Loop para coletar os dados das licitações
 while ($row = $result->fetch_assoc()) {
-    $total += $row['preco']; // Adiciona o preço do produto ao total
-    $productIds[] = $row['produto_id']; // Armazena o ID do produto
-}
-
-// Fecha a declaração
-$stmt->close();
-
-// Se houver produtos no carrinho, calcula o total das licitações
-if (!empty($productIds)) {
-    // Converte os IDs dos produtos em uma string separada por vírgulas
-    $productIdsString = implode(",", $productIds);
-
-    // Consulta para obter a maior bid de todos os produtos no carrinho
-    $bid_sql = "SELECT SUM(maior_valor) AS total_bids 
-                FROM (SELECT MAX(valor) AS maior_valor 
-                      FROM bids 
-                      WHERE produto_id IN ($productIdsString) 
-                      GROUP BY produto_id) AS bids_table";
-    $bid_stmt = $conn->prepare($bid_sql);
-    $bid_stmt->execute();
-    $bid_result = $bid_stmt->get_result();
-    $bid_data = $bid_result->fetch_assoc();
-    $totalBids = $bid_data['total_bids'] ?? 0; // Default é 0 se não houver bids
-
-    // Fecha a declaração da consulta de bids
-    $bid_stmt->close();
-}
-
-// Se houver produtos no carrinho, calcula o total das licitações
-if (!empty($productIds)) {
-    // Converte os IDs dos produtos em uma string separada por vírgulas
-    $productIdsString = implode(",", $productIds);
-
-    // Consulta para obter a maior bid de todos os produtos no carrinho
-    $bid_sql = "SELECT SUM(maior_valor) AS total_bids 
-                FROM (SELECT MAX(valor) AS maior_valor 
-                      FROM bids 
-                      WHERE produto_id IN ($productIdsString) 
-                      GROUP BY produto_id) AS bids_table";
-    $bid_stmt = $conn->prepare($bid_sql);
-    $bid_stmt->execute();
-    $bid_result = $bid_stmt->get_result();
-    $bid_data = $bid_result->fetch_assoc();
-    $totalBids = $bid_data['total_bids'] ?? 0; // Default é 0 se não houver bids
-
-    // Fecha a declaração da consulta de bids
-    $bid_stmt->close();
-}
-
-
-if ($isLoggedIn) {
-    // Consulta para obter os produtos no carrinho do utilizador
-    $sql = "SELECT c.*, p.titulo, p.preco, (SELECT pi.image_path FROM produto_imagens pi WHERE pi.produto_id = p.id LIMIT 1) AS image_path
-        FROM carrinho c 
-        JOIN produto p ON c.produto_id = p.id 
-        WHERE c.user_id = ?";
-
-    // Prepara e executa a consulta
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $userId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-
-
-    // Fecha a declaração
-    $stmt->close();
-} else {
-    echo '<p>Por favor, faça login para ver o seu carrinho.</p>';
+    // Atualiza o total de licitações
+    $total += $row['valor'];
+    $totalBids++;
 }
 
 // Fecha a conexão
-
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -130,14 +53,22 @@ if ($isLoggedIn) {
     <?php include 'includes/navbar.php' ?>
 
     <div class="container mt-5">
-        <h2 class="jomhuria-regular fs-custom text-center">O seu carrinho.</h2>
+        <h2 class="jomhuria-regular fs-custom text-center">As suas licitações.</h2>
 
         <img id="hiddenImage" src="imgs/elRxCnaZ_400x400.jpg" alt="Imagem de Checkout" />
         <div class="row">
             <!-- Coluna dos produtos -->
             <div class="col-12 col-lg-8">
                 <div class="container mt-3">
-                    <?php if ($isLoggedIn && $result->num_rows > 0): ?>
+                    <?php 
+                    // Reabre a conexão
+                    include 'includes/db.php';
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("i", $userId);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    if ($isLoggedIn && $result->num_rows > 0): ?>
                         <?php while($row = $result->fetch_assoc()): ?>
                             <div class="row rounded-3 mb-3 align-items-stretch" style="background-color:white">
                                 <!-- Coluna da imagem -->
@@ -152,37 +83,7 @@ if ($isLoggedIn) {
                                 <div class="col-12 col-md-8">
                                     <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['produto_id']); ?>" style="text-decoration:none; color:black" class="jomhuria-regular fs-2"><?php echo htmlspecialchars($row['titulo']); ?></a>
                                     <p class="jomhuria-regular fs-1" style="line-height:0"><?php echo htmlspecialchars($row['preco']); ?>€</p>
-                                    <?php
-                                        // Consulta para obter a maior bid do produto
-                                        $productId = $row['produto_id'];
-                                        $bid_sql = "SELECT MAX(valor) AS maior_valor FROM bids WHERE produto_id = ?";
-                                        $bid_stmt = $conn->prepare($bid_sql);
-                                        $bid_stmt->bind_param("i", $productId);
-                                        $bid_stmt->execute();
-                                        $bid_result = $bid_stmt->get_result();
-                                        $bid_data = $bid_result->fetch_assoc();
-                                        $maior_valor = $bid_data['maior_valor'] ?? 0; // Default é 0 se não houver bids
-
-                                        // Consulta para obter a licitação do utilizador
-                                        $user_bid_sql = "SELECT valor FROM bids WHERE produto_id = ? AND user_id = ?";
-                                        $user_bid_stmt = $conn->prepare($user_bid_sql);
-                                        $user_bid_stmt->bind_param("ii", $productId, $userId);
-                                        $user_bid_stmt->execute();
-                                        $user_bid_result = $user_bid_stmt->get_result();
-                                        $user_bid_data = $user_bid_result->fetch_assoc();
-                                        $user_bid_value = $user_bid_data['valor'] ?? 0; // Default é 0 se não houver licitação do utilizador
-                                    ?>
-                                    <p class="jomhuria-regular fs-2" style="line-height:1">Licitação atual: <?php echo htmlspecialchars($maior_valor); ?>€</p>
-                                    <p class="jomhuria-regular fs-2" style="line-height:1">Sua licitação: <?php echo htmlspecialchars($user_bid_value); ?>€</p>
-                                    <a href="pagina_produto.php?id=<?php echo htmlspecialchars($row['produto_id']); ?>" class="btn rounded-4 border-0 jomhuria-regular fs-1 mb-2" style="background-color: #000000; color: white; line-height:1">
-                                        Alterar Licitação.
-                                    </a>
-                                    <form method="POST" class="d-inline">
-                                        <input type="hidden" name="item_id" value="<?php echo htmlspecialchars($row['id']); ?>">
-                                        <button type="submit" name="remove_item" class="btn border-0 jomhuria-regular fs-4 " style="background-color: white; color: grey; line-height:1">
-                                            Remover
-                                        </button>
-                                    </form>
+                                    <p class="jomhuria-regular fs-2" style="line-height:1">A sua licitação: <?php echo htmlspecialchars($row['valor']); ?>€</p>
                                 </div>
                             </div>
                         <?php endwhile; ?>
@@ -192,36 +93,16 @@ if ($isLoggedIn) {
                 </div>
             </div>
             <!-- Coluna do total -->
-            <div class="col-12 col-lg-4 mt-3 rounded-3" style="background-color:white; height:300px; margin-bottom:200px">
-                <h2 class="jomhuria-regular fs-custom">Total.</h2>
-                <div>
-                    <p class="jomhuria-regular fs-1" style="line-height:1">Total: <?php echo htmlspecialchars(number_format($total, 2, ',', '.')); ?>€</p>
-                    <p class="jomhuria-regular fs-2" style="line-height:0">Total das Licitações: <?php echo htmlspecialchars(number_format($totalBids, 2, ',', '.')); ?>€</p>
-                        <a id="checkoutButton" href="#" class="btn rounded-4 border-0 jomhuria-regular fs-1 mt-5" style="background-color: #000000; color: white; line-height:1">
-                            Checkout.
-                        </a>
+            <div class="col-12 col-lg-4 mt-3 rounded-3" style="background-color:white; height:300px; margin-bottom: 20px;">
+                <h3 class="jomhuria-regular fs-1">Total das Licitações</h3>
+                <div class="">
+                    <h4 class="jomhuria-regular fs-2"><?php echo $totalBids > 0 ? htmlspecialchars($total) . "€" : "0€"; ?></h4>
                 </div>
             </div>
         </div>
     </div>
 
-    <?php include 'includes/footer.html' ?>
+    <?php include 'includes/footer.html'; ?>
     <script src="js/bootstrap.bundle.min.js"></script>
-    <script>
-    let clickCount = 0; // Contador de cliques
-
-    document.getElementById('checkoutButton').addEventListener('click', function(event) {
-        event.preventDefault(); // Previne o comportamento padrão do link
-        clickCount++; // Incrementa o contador
-
-        if (clickCount === 5) {
-            document.getElementById('hiddenImage').style.display = 'block'; // Exibe a imagem
-        }
-    });
-</script>
 </body>
 </html>
-
-<?php
-$conn->close();
-?>

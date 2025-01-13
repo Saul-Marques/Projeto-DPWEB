@@ -25,83 +25,65 @@ if (isset($_GET['id'])) {
     $images_query->execute();
     $images_result = $images_query->get_result();
 
-    if (!$product) {
-      header("Location: logica/error.php");
-        exit;
-    }
-
-    // Procurar o maior bid (maior_valor)
+    // Consulta para obter o maior valor de licitação
     $bid_query = $conn->prepare("SELECT MAX(valor) AS maior_valor FROM bids WHERE produto_id = ?");
     $bid_query->bind_param("i", $productId);
     $bid_query->execute();
     $bid_result = $bid_query->get_result();
     $bid_data = $bid_result->fetch_assoc();
-    $maior_valor = $bid_data['maior_valor'] ?? 0; // Default é 0 se não houver bids
+    $maior_valor = $bid_data['maior_valor'] ?? 0; // Inicializa a variável $maior_valor
 
-    $bid_history_query = $conn->prepare("
-    SELECT b.valor, b.licitado_a, u.username 
-    FROM bids b
-    JOIN users u ON b.user_id = u.id
-    WHERE b.produto_id = ?
-    ORDER BY b.licitado_a DESC
-    ");
+    $bid_history_query = $conn->prepare("SELECT b.*, u.username FROM bids b JOIN users u ON b.user_id = u.id WHERE b.produto_id = ? ORDER BY b.licitado_a DESC");
     $bid_history_query->bind_param("i", $productId);
     $bid_history_query->execute();
     $bid_history_result = $bid_history_query->get_result();
+    
+    
 
-   // Lógica para adicionar produto à tabela carrinho
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_carrinho']) && $isLoggedIn) {
-  $userId = $_SESSION['user_id'];
 
-  // Verificar se o produto existe
-  $checkProductQuery = $conn->prepare("SELECT id FROM produto WHERE id = ?");
-  $checkProductQuery->bind_param("i", $productId);
-  $checkProductQuery->execute();
-  $checkProductResult = $checkProductQuery->get_result();
-
-  if ($checkProductResult->num_rows > 0) {
-      // O produto existe, agora podemos adicionar ao carrinho
-      $stmt = $conn->prepare("INSERT INTO carrinho (user_id, produto_id) VALUES (?, ?)");
-      $stmt->bind_param("ii", $userId, $productId);
-
-      try {
-          if ($stmt->execute()) {
-              echo "<script>alert('Produto adicionado ao carrinho com sucesso!');</script>";
-          } else {
-              echo "<script>alert('Erro ao adicionar o produto ao carrinho.');</script>";
-          }
-      } catch (mysqli_sql_exception $e) {
-          echo "<script>alert('Erro ao adicionar o produto ao carrinho: " . $e->getMessage() . "');</script>";
-      }
-
-      $stmt->close();
-  } else {
-      echo "<script>alert('Produto não encontrado.');</script>";
-  }
-
-  $checkProductQuery->close();
-}
-
-    // Handle à submissão da bid
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['bid']) && $isLoggedIn) {
-        $valor = floatval($_POST['bid']);
-        $userId = $_SESSION['user_id'];
-
-        if ($valor > $maior_valor) {
-            $insert_bid = $conn->prepare("INSERT INTO bids (produto_id, user_id, valor) VALUES (?, ?, ?)");
-            $insert_bid->bind_param("iid", $productId, $userId, $valor);
-            if ($insert_bid->execute()) {
-                $maior_valor = $valor; // Atualiza a maior bid
-                echo "<script>alert('Lance registado com sucesso!');</script>";
-                header("pagina_produto.php");
-            } else {
-                echo "<script>alert('Erro ao registar o lance.');</script>";
-            }
-        } else {
-            echo "<script>alert('O lance deve ser maior que o valor atual.');</script>";
-        }
+    if (!$product) {
+      header("Location: logica/error.php");
+        exit;
     }
-} else {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['bid']) && $isLoggedIn) {
+      $productId = $_POST['product_id'];
+      $userId = $_SESSION['user_id'];
+      $bidValue = floatval($_POST['bid']);
+  
+      // Verificar se o produto existe
+      $checkProductQuery = $conn->prepare("SELECT id FROM produto WHERE id = ?");
+      $checkProductQuery->bind_param("i", $productId);
+      $checkProductQuery->execute();
+      $checkProductResult = $checkProductQuery->get_result();
+  
+      if ($checkProductResult->num_rows > 0) {
+
+          if ($bidValue > $maior_valor) {
+              // Inserir a nova licitação na base de dados
+              $stmt = $conn->prepare("INSERT INTO bids (produto_id, user_id, valor, licitado_a) VALUES (?, ?, ?, NOW())");
+              $stmt->bind_param("iid", $productId, $userId, $bidValue);
+  
+              try {
+                  if ($stmt->execute()) {
+                      echo "<script>alert('Licitação realizada com sucesso!');</script>";
+                  } else {
+                      echo "<script>alert('Erro ao realizar a licitação.');</script>";
+                  }
+              } catch (mysqli_sql_exception $e) {
+                  echo "<script>alert('Erro ao realizar a licitação: " . $e->getMessage() . "');</script>";
+              }
+  
+              $stmt->close();
+          } else {
+              echo "<script>alert('O valor da licitação deve ser maior que o valor atual.');</script>";
+          }
+      } else {
+          echo "<script>alert('Produto não encontrado.');</script>";
+      }
+  
+      $checkProductQuery->close();
+  }
+}else {
   header("Location: logica/error.php");
     exit;
 }
@@ -182,22 +164,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_carrinho']) && $is
             Termina em:
           </p>
           <br>
-          <form method="POST">
-          <div class="input-group">
-            <input type="text" class="form-control rounded-4 border-1 jomhuria-regular fs-3 align-self-center me-5" id="bid" min="<?php echo $maior_valor + 0.01; ?>" style="background-color: #BBBBBB; line-height: 0; border-color: black;" placeholder="Valor a licitar" name="bid">
-          </div>
-          <button type="submit" name="add_carrinho" class="btn rounded-4 border-1 jomhuria-regular fs-1 align-self-center me-5 mt-3" style="background-color: #000000; border-color: black; width: 100%; line-height: 1;color: white;">
-            Licitar
-          </button>
+          <form method="POST" action="logica/bids.php" id="bid-form">
+              <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($productId); ?>">
+              <div class="input-group">
+                  <input type="number" class="form-control rounded-4 border-1 jomhuria-regular fs-3 align-self-center me-5" id="bid" name="bid" step="0.01" required>
+              </div>
+              <button type="submit" class="btn rounded-4 border-1 jomhuria-regular fs-1 align-self-center me-5 mt-3" style="background-color: #000000; border-color: black; width: 100%; line-height: 1;color:white">
+                  Licitar
+              </button>
           </form>
-          <?php if ($isLoggedIn && $_SESSION['user_id'] != $product['user_id']): ?>
-            <form method="POST">
-                <input type="hidden" value="<?php echo htmlspecialchars($productId) ?>">
-                <button type="submit" name="add_carrinho" class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
-                    Adicionar ao carrinho
-                </button>
-            </form>
-          <?php endif; ?>
         </div>
         
       </div>
@@ -255,25 +230,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_carrinho']) && $is
             Termina em:
           </p>
           <br>
-          <form method="POST">
-          <div class="input-group">
-            <input type="text" class="form-control rounded-4 border-1 jomhuria-regular fs-3 align-self-center me-5" id="bid" min="<?php echo $maior_valor + 0.01; ?>" style="background-color: #BBBBBB; line-height: 0; border-color: black;" placeholder="Valor a licitar" name="bid">
-          </div>
-          <button type="submit" class="btn rounded-4 border-1 jomhuria-regular fs-1 align-self-center me-5 mt-3" style="background-color: #000000; border-color: black; width: 100%; line-height: 1;color:white">
-            Licitar.
-          </button>
+          <form method="POST" action="logica/bids.php" id="bid-form">
+              <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($productId); ?>">
+              <div class="input-group">
+                  <input type="number" class="form-control rounded-4 border-1 jomhuria-regular fs-3 align-self-center me-5" id="bid" name="bid" step="0.01" required>
+              </div>
+              <button type="submit" class="btn rounded-4 border-1 jomhuria-regular fs-1 align-self-center me-5 mt-3 mb-3" style="background-color: #000000; border-color: black; width: 100%; line-height: 1;color:white">
+                  Licitar
+              </button>
           </form>
-          <?php if ($isLoggedIn && $_SESSION['user_id'] != $product['user_id']): ?>
-            <form method="POST">
-                <input type="hidden" value="<?php echo htmlspecialchars($productId) ?>">
-                <button type="submit" name="add_carrinho" class="btn rounded-4 border-0 jomhuria-regular fs-1 align-self-center me-5 mb-3 mt-3" style="background-color: #000000; width: 100%; line-height: 1; color: white;">
-                    Adicionar ao carrinho
-                </button>
-            </form>
-          <?php endif; ?>
-        </div>
-        
       </div>
+    </div>
       <div class="row rounded mt-3" style="background-color: white;">
         <div class="col">
           <p class="jomhuria-regular fs-1" style="line-height: 1; color: #5E5E5E;">
@@ -292,13 +259,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_carrinho']) && $is
             <p class="jomhuria-regular fs-3 mb-5" style="line-height: 1; color: #5E5E5E;">
                 <?php echo htmlspecialchars($bid['username']); ?>       
                 <?php 
-                    $timeElapsed = time() - strtotime($bid['licitado_a']); // Calculate elapsed time in seconds
-                    if ($timeElapsed < 3600) { // Less than an hour
+                    $timeElapsed = time() - strtotime($bid['licitado_a']); // Calcula em segundos
+                    if ($timeElapsed < 3600) { // Menos de uma hora
                         $minutesElapsed = floor($timeElapsed / 60);
-                        echo "há {$minutesElapsed}m"; // Display in minutes
+                        echo "há {$minutesElapsed}m"; // Display em minutos
                     } else {
                         $hoursElapsed = floor($timeElapsed / 3600);
-                        echo "há {$hoursElapsed}h"; // Display in hours
+                        echo "há {$hoursElapsed}h"; // Display em horas
                     }
                 ?> 
                 <?php echo number_format($bid['valor'], 2); ?>€
@@ -315,5 +282,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_carrinho']) && $is
     Chamada assíncrona para atualizar o preço inserido 
     -->
   
+
 </body>
 </html>
